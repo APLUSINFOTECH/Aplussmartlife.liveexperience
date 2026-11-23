@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Plus Smart Life | Virtual Experience Center • Magnetic+ Glass Touch</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-obsidian: #090b10;
+      --glass-surface: rgba(16, 19, 27, 0.78);
+      --glass-border: rgba(255, 255, 255, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-obsidian);
+      color: #f3f4f6;
+      overflow-x: hidden;
+    }
+
+    .font-serif-luxury {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    .glass-card {
+      background: var(--glass-surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+    }
+
+    /* Architectural Wall Textures Behind Touch Panel */
+    .wall-walnut {
+      background:
+        repeating-linear-gradient(90deg, rgba(24, 14, 9, 0.92) 0px, rgba(46, 26, 15, 0.92) 18px, rgba(31, 17, 10, 0.95) 20px, rgba(54, 31, 18, 0.9) 38px),
+        radial-gradient(circle at 50% 35%, #522e19 0%, #170c07 85%);
+    }
+
+    .wall-concrete {
+      background:
+        radial-gradient(circle at 30% 25%, rgba(125, 130, 138, 0.25), transparent 60%),
+        linear-gradient(145deg, #454952 0%, #272a30 55%, #1a1c21 100%);
+    }
+
+    .wall-marble {
+      background:
+        linear-gradient(125deg, transparent 38%, rgba(155, 160, 170, 0.2) 41%, transparent 48%),
+        radial-gradient(circle at 20% 20%, #ffffff 0%, #eceef2 45%, #d5d9e2 100%);
+    }
+
+    /* Magnetic+ 3mm Toughened Glass Switch Plate */
+    .magnetic-plate {
+      position: relative;
+      border-radius: 20px;
+      transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      user-select: none;
+    }
+
+    /* 3mm Glass Beveled Rim */
+    .magnetic-plate::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 2.5px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0.1) 35%, rgba(255, 255, 255, 0.04) 65%, rgba(255, 255, 255, 0.42) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* Diagonal Glass Specular Sheen */
+    .magnetic-plate::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: linear-gradient(118deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.02) 38%, transparent 42%);
+      pointer-events: none;
+    }
+
+    .plate-black {
+      background: linear-gradient(160deg, #171920 0%, #090a0d 60%, #111318 100%);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.88), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    }
+
+    .plate-grey {
+      background: linear-gradient(160deg, #6b7079 0%, #50545d 52%, #40444c 100%);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.72), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+    }
+
+    .plate-white {
+      background: linear-gradient(160deg, #fcfcfd 0%, #eef0f4 55%, #e2e5ec 100%);
+      box-shadow: 0 22px 45px -12px rgba(15, 23, 42, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+    }
+
+    /* Vertical Capacitive Touch Pill LEDs */
+    .led-pill {
+      width: 4px;
+      height: 22px;
+      border-radius: 999px;
+      transition: all 0.28s ease;
+    }
+
+    .plate-black .led-pill.off,
+    .plate-grey .led-pill.off {
+      background: rgba(255, 255, 255, 0.36);
+      box-shadow: 0 0 4px rgba(255, 255, 255, 0.12);
+    }
+
+    .plate-white .led-pill.off {
+      background: rgba(71, 85, 105, 0.34);
+    }
+
+    .led-pill.on-amber {
+      background: #ffd166;
+      box-shadow: 0 0 10px #f59e0b, 0 0 20px rgba(245, 158, 11, 0.78);
+    }
+
+    .led-pill.on-cyan {
+      background: #38bdf8;
+      box-shadow: 0 0 10px #0284c7, 0 0 20px rgba(56, 189, 248, 0.78);
+    }
+
+    .plate-white .led-pill.on-amber {
+      background: #d97706;
+      box-shadow: 0 0 8px rgba(217, 119, 6, 0.85), 0 0 16px rgba(245, 158, 11, 0.55);
+    }
+
+    .plate-white .led-pill.on-cyan {
+      background: #0284c7;
+      box-shadow: 0 0 8px rgba(2, 132, 199, 0.85), 0 0 16px rgba(56, 189, 248, 0.55);
+    }
+
+    .touch-pad {
+      position: relative;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: transform 0.12s ease, background-color 0.2s ease;
+    }
+
+    .touch-pad:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .plate-white .touch-pad:hover {
+      background-color: rgba(15, 23, 42, 0.05);
+    }
+
+    .touch-pad:active {
+      transform: scale(0.94);
+    }
+
+    @keyframes touchRipple {
+      0% { transform: scale(0.4); opacity: 0.75; }
+      100% { transform: scale(2.1); opacity: 0; }
+    }
+
+    .ripple-circle {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(251, 191, 36, 0.85);
+      pointer-events: none;
+      animation: touchRipple 0.48s ease-out forwards;
+    }
+
+    /* Smooth 0.6s Architectural Lighting Transitions */
+    .light-layer {
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  background 0.6s ease;
+    }
+
+    .curtain-drape {
+      transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* Fan Rotation Speeds */
+    @keyframes spinBlades {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .fan-1 { animation: spinBlades 2.4s linear infinite; }
+    .fan-2 { animation: spinBlades 1.5s linear infinite; }
+    .fan-3 { animation: spinBlades 0.9s linear infinite; }
+    .fan-4 { animation: spinBlades 0.45s linear infinite; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-amber-500/30 selection:text-amber-200">
+
+  <!-- ======================================================================
+       1. HEADER & BRANDING
+       ====================================================================== -->
+  <header class="sticky top-0 z-40 glass-card border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3">
+    <div class="max-w-[1400px] mx-auto flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo Emblem + Title -->
+      <div class="flex items-center gap-3.5">
+        <div class="bg-white rounded-xl p-1.5 shadow-md shadow-black/40 w-11 h-11 flex items-center justify-center shrink-0">
+          <svg viewBox="0 0 120 110" class="w-full h-full" aria-label="A Plus Smart Life Logo">
+            <!-- Green Swoosh -->
+            <path d="M12 88 C 24 44, 62 16, 108 6 C 74 24, 42 50, 12 88 Z" fill="#8cc63f"/>
+            <!-- Blue Swoosh -->
+            <path d="M40 54 C 58 34, 82 23, 110 21 C 86 30, 64 41, 40 54 Z" fill="#00a8e8"/>
+            <!-- Teal Swoosh -->
+            <path d="M16 90 C 32 66, 56 49, 82 41 C 61 54, 40 70, 16 90 Z" fill="#5bc0be"/>
+            <!-- Dark Navy 'A' -->
+            <path d="M36 96 L53 62 L61 62 L78 96 L68 96 L64.5 88.5 L49.5 88.5 L46 96 Z M52.8 81.5 L61.2 81.5 L57 72.2 Z" fill="#132d54"/>
+            <!-- 'PLUS' -->
+            <text x="69" y="72" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="13.5" letter-spacing="0.4" fill="#132d54">PLUS</text>
+            <!-- 'SMART LIFE' Subtitle -->
+            <text x="60" y="106" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="8.5" letter-spacing="1.8" fill="#132d54">SMART LIFE</text>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-bold tracking-wide text-base sm:text-lg text-white">A PLUS <span class="font-light text-sky-400">SMART LIFE</span></span>
+          </div>
+          <p class="text-[10px] sm:text-[11px] font-semibold tracking-[0.14em] uppercase text-gray-400">
+            VIRTUAL EXPERIENCE CENTER • MAGNETIC+ GLASS TOUCH
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Status Pill: Live Virtual Showroom -->
+      <div class="px-3.5 sm:px-4 py-2 rounded-full text-[11px] sm:text-xs font-semibold tracking-wide bg-white/[0.04] border border-white/15 text-gray-200 flex items-center gap-2.5 shrink-0 shadow-inner">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+        </span>
+        <span class="hidden sm:inline">LIVE VIRTUAL SHOWROOM • 230V AC VOICE READY</span>
+        <span class="sm:hidden">LIVE SHOWROOM</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       MAIN EXPERIENCE STAGE (7 COLS LEFT VISUALIZER / 5 COLS RIGHT PANEL)
+       ====================================================================== -->
+  <main class="flex-1 max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+    <!-- LEFT COLUMN (7 COLS): ROOM SELECTOR + ARCHITECTURAL VISUALIZER + SCENES -->
+    <section class="lg:col-span-7 flex flex-col gap-4">
+
+      <!-- Room Selector Pill Tabs -->
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div class="inline-flex items-center p-1 rounded-2xl glass-card gap-1" role="tablist">
+          <button onclick="selectRoom('living')" id="room-tab-living"
+            class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition bg-amber-500/20 text-amber-300 border border-amber-400/40">
+            Luxury Living Room
+          </button>
+          <button onclick="selectRoom('bedroom')" id="room-tab-bedroom"
+            class="px-3.5 py-1.5 rounded-xl text-xs font-medium transition text-gray-400 hover:text-white border border-transparent">
+            Master Suite
+          </button>
+          <button onclick="selectRoom('office')" id="room-tab-office"
+            class="px-3.5 py-1.5 rounded-xl text-xs font-medium transition text-gray-400 hover:text-white border border-transparent">
+            Executive Office
+          </button>
+        </div>
+
+        <span class="hidden sm:inline-block text-xs text-gray-400">
+          Tap switches on the right to control room lighting live
+        </span>
+      </div>
+
+      <!-- Architectural Luxury Room Viewport -->
+      <div class="relative w-full aspect-[16/10] rounded-3xl overflow-hidden border border-white/15 shadow-2xl bg-[#08090d] select-none">
+
+        <!-- Base Architectural Shell -->
+        <div id="roomShellBg" class="light-layer absolute inset-0"
+          style="background: linear-gradient(180deg, #111319 0%, #181b23 58%, #0d0f14 58%, #08090d 100%);">
+        </div>
+
+        <!-- Back Architectural Wall (Fluted Wood + Stone + Panoramic Dusk Window) -->
+        <div class="absolute inset-x-[12%] top-[14%] bottom-[26%] grid grid-cols-12">
+          <!-- Left Fluted Timber -->
+          <div class="col-span-3 h-full border-r border-black/40"
+            style="background: repeating-linear-gradient(90deg, #1b120d 0px, #2b1d14 8px, #130c08 10px);">
+          </div>
+          <!-- Center Feature Wall -->
+          <div class="col-span-6 h-full relative"
+            style="background: linear-gradient(180deg, #1e212a 0%, #15171e 100%);">
+            <!-- TV / Monitor Ambient Cyan Backlight -->
+            <div id="glow-ambient" class="light-layer absolute inset-x-[14%] inset-y-[18%] rounded-xl opacity-0 pointer-events-none"
+              style="background: radial-gradient(circle, rgba(56, 189, 248, 0.52) 0%, rgba(14, 165, 233, 0.15) 60%, transparent 80%); filter: blur(10px);">
+            </div>
+          </div>
+          <!-- Right Panoramic Window + Motorized Curtain -->
+          <div class="col-span-3 h-full relative overflow-hidden border-l border-black/50 bg-gradient-to-b from-[#0a1128] via-[#1c2541] to-[#3a506b]">
+            <div class="absolute top-4 left-4 w-1 h-1 bg-white/60 rounded-full"></div>
+            <div class="absolute top-10 right-5 w-1 h-1 bg-white/40 rounded-full"></div>
+            <div class="absolute bottom-6 left-4 w-2 h-2 bg-amber-300/35 rounded-full blur-[1px]"></div>
+            <div id="curtainDrape" class="curtain-drape absolute inset-0 bg-gradient-to-r from-[#232631]/95 via-[#2d313e]/95 to-[#1d2029]/95 border-l border-white/10"
+              style="transform: translateX(0%);">
+              <div class="w-full h-full opacity-30"
+                style="background: repeating-linear-gradient(90deg, transparent 0px, transparent 10px, rgba(0,0,0,0.45) 12px);">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Lighting Glow Halos (0.6s Smooth Transitions) -->
+        <div id="glow-cove" class="light-layer absolute inset-0 pointer-events-none opacity-0"
+          style="background: radial-gradient(ellipse 76% 32% at 50% 12%, rgba(251, 191, 36, 0.44) 0%, rgba(245, 158, 11, 0.14) 48%, transparent 76%);">
+        </div>
+        <div id="glow-chandelier" class="light-layer absolute inset-0 pointer-events-none opacity-0"
+          style="background: radial-gradient(circle at 50% 33%, rgba(255, 236, 179, 0.56) 0%, rgba(251, 191, 36, 0.2) 32%, transparent 65%);">
+        </div>
+        <div id="glow-washers" class="light-layer absolute inset-0 pointer-events-none opacity-0"
+          style="background:
+            radial-gradient(ellipse 14% 42% at 24% 26%, rgba(255, 244, 214, 0.46) 0%, transparent 75%),
+            radial-gradient(ellipse 14% 42% at 50% 26%, rgba(255, 244, 214, 0.46) 0%, transparent 75%),
+            radial-gradient(ellipse 14% 42% at 76% 26%, rgba(255, 244, 214, 0.46) 0%, transparent 75%);">
+        </div>
+        <div id="glow-lamp" class="light-layer absolute inset-0 pointer-events-none opacity-0"
+          style="background: radial-gradient(circle at 21% 62%, rgba(251, 146, 60, 0.56) 0%, rgba(245, 158, 11, 0.18) 34%, transparent 62%);">
+        </div>
+        <div id="glow-strip" class="light-layer absolute inset-0 pointer-events-none opacity-0"
+          style="background: radial-gradient(ellipse 68% 26% at 50% 74%, rgba(56, 189, 248, 0.36) 0%, rgba(14, 165, 233, 0.12) 50%, transparent 78%);">
+        </div>
+
+        <!-- Custom Architectural SVG Fixtures & Room Furnishings -->
+        <svg viewBox="0 0 800 450" class="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="floorPerspective" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#13151c" />
+              <stop offset="100%" stop-color="#08090d" />
+            </linearGradient>
+            <linearGradient id="sofaLeather" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2c303b" />
+              <stop offset="100%" stop-color="#171920" />
+            </linearGradient>
+            <linearGradient id="warmBrass" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fde68a" />
+              <stop offset="50%" stop-color="#d97706" />
+              <stop offset="100%" stop-color="#92400e" />
+            </linearGradient>
+          </defs>
+
+          <!-- Perspective Ceiling Tray & Cove Strip -->
+          <polygon points="0,0 800,0 704,63 96,63" fill="#0c0e13" stroke="#222632" stroke-width="1" />
+          <line id="svg-cove" x1="102" y1="61" x2="698" y2="61" stroke="#323746" stroke-width="3" stroke-linecap="round" />
+
+          <!-- Wall Washer Spotlights -->
+          <ellipse id="svg-washer-1" cx="195" cy="34" rx="12" ry="4" fill="#272b36" />
+          <ellipse id="svg-washer-2" cx="400" cy="34" rx="12" ry="4" fill="#272b36" />
+          <ellipse id="svg-washer-3" cx="605" cy="34" rx="12" ry="4" fill="#272b36" />
+
+          <!-- Halo Pendant Chandelier -->
+          <line x1="362" y1="22" x2="362" y2="95" stroke="#52525b" stroke-width="1.5" />
+          <line x1="438" y1="22" x2="438" y2="95" stroke="#52525b" stroke-width="1.5" />
+          <ellipse cx="400" cy="102" rx="68" ry="12" fill="none" stroke="url(#warmBrass)" stroke-width="4" />
+          <ellipse id="svg-chandelier" cx="400" cy="104" rx="64" ry="10" fill="none" stroke="#4b5563" stroke-width="2.5" />
+
+          <!-- Animated Designer Ceiling Fan -->
+          <g transform="translate(615, 76)">
+            <line x1="0" y1="-44" x2="0" y2="-8" stroke="#52525b" stroke-width="3" />
+            <g id="svg-fan-rotor">
+              <ellipse cx="-38" cy="0" rx="34" ry="5" fill="#3f3f46" stroke="#71717a" stroke-width="0.8" />
+              <ellipse cx="38" cy="0" rx="34" ry="5" fill="#3f3f46" stroke="#71717a" stroke-width="0.8" />
+              <ellipse cx="0" cy="-14" rx="7" ry="12" fill="#27272a" />
+              <ellipse cx="0" cy="14" rx="7" ry="12" fill="#27272a" />
+            </g>
+            <circle cx="0" cy="0" r="9" fill="url(#warmBrass)" />
+          </g>
+
+          <!-- Heavy Duty 25A Split Inverter AC -->
+          <g transform="translate(115, 86)">
+            <rect x="0" y="0" width="110" height="27" rx="6" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1" />
+            <line x1="8" y1="20" x2="102" y2="20" stroke="#4b5563" stroke-width="2" />
+            <circle id="svg-ac-indicator" cx="94" cy="10" r="2.5" fill="#6b7280" />
+            <text x="12" y="13" font-size="6.5" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="#374151">25A HEAVY DUTY</text>
+          </g>
+
+          <!-- Luxury Perspective Flooring -->
+          <polygon points="96,333 704,333 800,450 0,450" fill="url(#floorPerspective)" />
+          <ellipse id="svg-floor-sheen" cx="400" cy="390" rx="260" ry="36" fill="rgba(251, 191, 36, 0.03)" />
+
+          <!-- ROOM 1: LUXURY LIVING ROOM -->
+          <g id="scene-living">
+            <!-- Ultra-Slim Architectural TV with Ambient Backlight -->
+            <rect x="330" y="148" width="140" height="78" rx="4" fill="#090b10" stroke="#374151" stroke-width="2" />
+            <rect id="svg-tv-glow" x="328" y="146" width="144" height="82" rx="6" fill="none" stroke="#38bdf8" stroke-width="0" opacity="0.6" />
+            <!-- Designer Arch Floor Lamp -->
+            <path d="M136,345 L136,195 Q136,165 168,175" fill="none" stroke="url(#warmBrass)" stroke-width="3" />
+            <ellipse cx="136" cy="347" rx="18" ry="4" fill="#27272a" />
+            <path id="svg-living-lamp" d="M154,174 L182,174 L188,194 L148,194 Z" fill="#3f3f46" />
+            <!-- Sectional Sofa -->
+            <rect x="235" y="272" width="330" height="68" rx="14" fill="url(#sofaLeather)" stroke="#3f3f46" stroke-width="1" />
+            <rect x="225" y="292" width="24" height="52" rx="8" fill="#23262f" />
+            <rect x="551" y="292" width="24" height="52" rx="8" fill="#23262f" />
+            <rect x="255" y="280" width="36" height="28" rx="6" fill="#374151" />
+            <rect x="508" y="280" width="36" height="28" rx="6" fill="#374151" />
+            <!-- Marble Coffee Table -->
+            <ellipse cx="400" cy="378" rx="92" ry="18" fill="#e5e7eb" opacity="0.88" />
+          </g>
+
+          <!-- ROOM 2: MASTER SUITE -->
+          <g id="scene-bedroom" style="display: none;">
+            <rect x="265" y="185" width="270" height="115" rx="12" fill="#23262f" stroke="#3f3f46" stroke-width="1.5" />
+            <rect x="275" y="275" width="250" height="95" rx="12" fill="#d1d5db" />
+            <rect x="275" y="305" width="250" height="65" rx="10" fill="#334155" />
+            <rect x="295" y="255" width="95" height="32" rx="8" fill="#f3f4f6" />
+            <rect x="410" y="255" width="95" height="32" rx="8" fill="#f3f4f6" />
+            <rect x="200" y="295" width="52" height="48" rx="6" fill="#1f2937" />
+            <rect id="svg-bed-lamp" x="216" y="252" width="20" height="28" rx="4" fill="#4b5563" />
+            <line x1="226" y1="280" x2="226" y2="295" stroke="#d97706" stroke-width="2.5" />
+            <rect x="548" y="295" width="52" height="48" rx="6" fill="#1f2937" />
+          </g>
+
+          <!-- ROOM 3: EXECUTIVE OFFICE -->
+          <g id="scene-office" style="display: none;">
+            <rect x="305" y="142" width="190" height="120" rx="6" fill="#14161d" stroke="#374151" stroke-width="1.5" />
+            <line x1="305" y1="182" x2="495" y2="182" stroke="#374151" stroke-width="2" />
+            <line x1="305" y1="222" x2="495" y2="222" stroke="#374151" stroke-width="2" />
+            <!-- Executive Desk & Dual Monitor -->
+            <rect x="245" y="288" width="310" height="16" rx="4" fill="#451a03" stroke="#92400e" stroke-width="1" />
+            <rect x="265" y="304" width="18" height="58" fill="#1c1917" />
+            <rect x="517" y="304" width="18" height="58" fill="#1c1917" />
+            <rect x="362" y="242" width="76" height="40" rx="3" fill="#090b10" stroke="#4b5563" stroke-width="1.5" />
+            <path id="svg-office-lamp" d="M278,288 L278,252 L306,258" fill="none" stroke="url(#warmBrass)" stroke-width="3" />
+            <rect x="360" y="315" width="80" height="55" rx="14" fill="#1f2937" stroke="#4b5563" stroke-width="1.5" />
+          </g>
+        </svg>
+
+        <!-- Floating HUD Status Overlay -->
+        <div class="absolute top-3.5 left-3.5 right-3.5 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+          <span id="hudRoomTitle" class="px-3 py-1 rounded-full text-[11px] font-semibold bg-black/65 backdrop-blur-md text-white border border-white/15">
+            Luxury Living Room
+          </span>
+          <div class="flex items-center gap-2">
+            <span id="hudActiveLoads" class="px-3 py-1 rounded-full text-[11px] font-medium bg-black/65 backdrop-blur-md text-emerald-300 border border-white/15">
+              3 Active Loads
+            </span>
+            <span id="hudWattage" class="px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-black/65 backdrop-blur-md text-amber-300 border border-white/15">
+              124W
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. PROMINENT SMART MOOD SCENES SHOWCASE -->
+      <div class="glass-card rounded-3xl p-5 sm:p-6 border border-white/15 shadow-2xl shadow-black/40 flex flex-col gap-4 relative overflow-hidden">
+        <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent pointer-events-none"></div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5">
+            <span class="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24]"></span>
+            <h2 class="text-sm sm:text-base font-bold tracking-[0.14em] uppercase text-white">
+              Smart Mood Scenes
+            </h2>
+          </div>
+          <span class="text-xs text-gray-400 font-medium">One-Touch Architectural Presets</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-3.5">
+          <button onclick="applyScene('welcome')" id="scene-btn-welcome"
+            class="group flex flex-col items-start text-left p-4 sm:p-5 rounded-2xl transition-all duration-200 bg-amber-500/20 text-amber-200 border border-amber-400/60 shadow-lg shadow-amber-500/15">
+            <span class="text-2xl sm:text-3xl mb-2.5 leading-none">✨</span>
+            <span class="text-sm sm:text-[15px] font-bold text-white leading-snug">Welcome Home</span>
+            <span class="text-[11px] sm:text-xs text-amber-200/80 mt-1 leading-tight">Warm Cove &amp; Lamp</span>
+          </button>
+
+          <button onclick="applyScene('dinner')" id="scene-btn-dinner"
+            class="group flex flex-col items-start text-left p-4 sm:p-5 rounded-2xl transition-all duration-200 bg-white/[0.04] hover:bg-white/[0.09] text-gray-200 border border-white/10 hover:border-amber-400/40">
+            <span class="text-2xl sm:text-3xl mb-2.5 leading-none">🥂</span>
+            <span class="text-sm sm:text-[15px] font-bold text-white leading-snug">Dinner Party</span>
+            <span class="text-[11px] sm:text-xs text-gray-400 mt-1 leading-tight">Full Chandelier &amp; AC</span>
+          </button>
+
+          <button onclick="applyScene('cinema')" id="scene-btn-cinema"
+            class="group flex flex-col items-start text-left p-4 sm:p-5 rounded-2xl transition-all duration-200 bg-white/[0.04] hover:bg-white/[0.09] text-gray-200 border border-white/10 hover:border-sky-400/40">
+            <span class="text-2xl sm:text-3xl mb-2.5 leading-none">🎬</span>
+            <span class="text-sm sm:text-[15px] font-bold text-white leading-snug">Cinema Night</span>
+            <span class="text-[11px] sm:text-xs text-gray-400 mt-1 leading-tight">Cyan Backlight &amp; Strip</span>
+          </button>
+
+          <button onclick="applyScene('alloff')" id="scene-btn-alloff"
+            class="group flex flex-col items-start text-left p-4 sm:p-5 rounded-2xl transition-all duration-200 bg-white/[0.04] hover:bg-rose-500/15 text-gray-200 border border-white/10 hover:border-rose-400/40">
+            <span class="text-2xl sm:text-3xl mb-2.5 leading-none">⏻</span>
+            <span class="text-sm sm:text-[15px] font-bold text-white leading-snug">All Off</span>
+            <span class="text-[11px] sm:text-xs text-gray-400 mt-1 leading-tight">Master Standby Off</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN (5 COLS): INTERACTIVE MAGNETIC+ GLASS TOUCH PANEL SIMULATOR -->
+    <aside class="lg:col-span-5 flex flex-col gap-4">
+
+      <!-- Finish Switcher & Brochure Model Selector -->
+      <div class="glass-card rounded-2xl p-4 flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wider text-gray-300">Panel Glass Finish</span>
+          <span class="text-[11px] text-amber-300/90 font-medium">3mm Toughened Glass</span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2">
+          <button onclick="setPanelFinish('black')" id="fin-btn-black"
+            class="flex items-center justify-center gap-2 py-2 px-2.5 rounded-xl text-xs font-semibold bg-white/15 border border-amber-400/60 text-white transition">
+            <span class="w-3 h-3 rounded-full bg-[#0d0f14] border border-white/40"></span>
+            <span>Black</span>
+          </button>
+          <button onclick="setPanelFinish('grey')" id="fin-btn-grey"
+            class="flex items-center justify-center gap-2 py-2 px-2.5 rounded-xl text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition">
+            <span class="w-3 h-3 rounded-full bg-[#636872] border border-white/40"></span>
+            <span>Metallic Grey</span>
+          </button>
+          <button onclick="setPanelFinish('white')" id="fin-btn-white"
+            class="flex items-center justify-center gap-2 py-2 px-2.5 rounded-xl text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition">
+            <span class="w-3 h-3 rounded-full bg-[#f1f5f9] border border-gray-400"></span>
+            <span>White</span>
+          </button>
+        </div>
+
+        <div class="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
+          <label for="brochureModel" class="text-xs text-gray-400 shrink-0">Configuration:</label>
+          <select id="brochureModel" onchange="setBrochureModel(this.value)"
+            class="w-full bg-[#12151e] text-gray-100 text-xs rounded-xl px-3 py-2 border border-white/15 focus:outline-none focus:border-amber-400">
+            <option value="no01">No. 01 (2M — 2 Switch)</option>
+            <option value="no03" selected>No. 03 (4M — 4 Switch + 1 Fan)</option>
+            <option value="no09">No. 09 (6M — 10 Switch)</option>
+            <option value="no14">No. 14 (12M — 20 Switch + 2 Socket)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Wall-Mounted Magnetic+ Glass Touch Panel -->
+      <div id="panelWallStage" class="wall-walnut relative rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center min-h-[300px] border border-white/15 shadow-2xl transition-all duration-500">
+        
+        <div id="magneticPlate" class="magnetic-plate plate-black w-full max-w-[430px] px-5 py-6 sm:px-7 sm:py-7">
+          <div id="touchPlateContent" class="relative z-10"></div>
+        </div>
+
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
+          <span class="text-[11px] text-white/85 bg-black/45 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/10">
+            Capacitive Touch • Soft RGB Status
+          </span>
+          <button onclick="toggleSound()" id="soundToggleBtn"
+            class="text-[11px] text-amber-300 bg-black/55 hover:bg-black/75 backdrop-blur-md px-3 py-1 rounded-full border border-amber-400/30 transition">
+            🔊 Chime: ON
+          </button>
+        </div>
+      </div>
+
+      <!-- Compact Brochure Spec Strip -->
+      <div class="glass-card rounded-2xl px-4 py-3 text-center">
+        <p class="text-[11px] font-medium tracking-wide text-gray-300">
+          3mm Toughened Glass <span class="text-amber-400 mx-1">•</span>
+          1 Lakh+ Touch Life <span class="text-amber-400 mx-1">•</span>
+          25A Heavy Duty Relay <span class="text-amber-400 mx-1">•</span>
+          Voice &amp; OTA Ready
+        </p>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ======================================================================
+       INTERACTIVE ENGINE (LIGHTING, PANEL SIMULATOR & WEB AUDIO CHIME)
+       ====================================================================== -->
+  <script>
+    const appState = {
+      room: 'living',
+      scene: 'welcome',
+      finish: 'black',
+      model: 'no03',
+      fanSpeed: 2, // 0 to 4
+      soundEnabled: true,
+      loads: {
+        cove: true,
+        lamp: true,
+        chandelier: false,
+        washers: false,
+        strip: false,
+        ambient: false,
+        ac: false,
+        curtain: false,
+        socket1: true,
+        socket2: false
+      }
+    };
+
+    const fixtureMap = {
+      cove: { label: 'Cove LED', watts: 48, color: 'amber', tag: '' },
+      chandelier: { label: 'Chandelier', watts: 96, color: 'amber', tag: '' },
+      washers: { label: 'Wall Wash', watts: 36, color: 'amber', tag: '' },
+      lamp: { label: 'Floor Lamp', watts: 28, color: 'amber', tag: '' },
+      strip: { label: 'Accent Strip', watts: 24, color: 'cyan', tag: '' },
+      ambient: { label: 'TV Glow', watts: 18, color: 'cyan', tag: '' },
+      ac: { label: 'Split AC', watts: 1450, color: 'cyan', tag: '25A HD' },
+      curtain: { label: 'Curtains', watts: 35, color: 'amber', tag: '2-WAY' },
+      socket1: { label: 'Socket 1', watts: 60, color: 'amber', tag: '10A' },
+      socket2: { label: 'Socket 2', watts: 60, color: 'amber', tag: '10A' }
+    };
+
+    const roomTitles = {
+      living: 'Luxury Living Room',
+      bedroom: 'Master Suite',
+      office: 'Executive Office'
+    };
+
+    // Subtle Capacitive Glass Touch Chime (Web Audio API)
+    let audioContext = null;
+    function toggleSound() {
+      appState.soundEnabled = !appState.soundEnabled;
+      const btn = document.getElementById('soundToggleBtn');
+      if (btn) {
+        btn.textContent = appState.soundEnabled ? '🔊 Chime: ON' : '🔇 Chime: OFF';
+        btn.className = appState.soundEnabled
+          ? 'text-[11px] text-amber-300 bg-black/55 hover:bg-black/75 backdrop-blur-md px-3 py-1 rounded-full border border-amber-400/30 transition'
+          : 'text-[11px] text-gray-400 bg-black/55 hover:bg-black/75 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 transition';
+      }
+      if (appState.soundEnabled) playCapacitiveClick(true);
+    }
+
+    function playCapacitiveClick(isOn = true) {
+      if (!appState.soundEnabled) return;
+      try {
+        if (!audioContext) {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioContext.state === 'suspended') audioContext.resume();
+
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(isOn ? 1120 : 840, audioContext.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(isOn ? 1560 : 540, audioContext.currentTime + 0.045);
+
+        gain.gain.setValueAtTime(0.055, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        osc.start();
+        osc.stop(audioContext.currentTime + 0.055);
+      } catch (e) {}
+    }
+
+    function spawnRipple(el, event) {
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const x = (event && event.clientX ? event.clientX - rect.left : rect.width / 2) - 13;
+      const y = (event && event.clientY ? event.clientY - rect.top : rect.height / 2) - 13;
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple-circle';
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      el.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 500);
+    }
+
+    function selectRoom(roomKey) {
+      appState.room = roomKey;
+      playCapacitiveClick(true);
+
+      ['living', 'bedroom', 'office'].forEach(key => {
+        const tab = document.getElementById(`room-tab-${key}`);
+        const sceneGroup = document.getElementById(`scene-${key}`);
+        if (key === roomKey) {
+          tab.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold transition bg-amber-500/20 text-amber-300 border border-amber-400/40';
+          if (sceneGroup) sceneGroup.style.display = 'block';
+        } else {
+          tab.className = 'px-3.5 py-1.5 rounded-xl text-xs font-medium transition text-gray-400 hover:text-white border border-transparent';
+          if (sceneGroup) sceneGroup.style.display = 'none';
+        }
+      });
+
+      document.getElementById('hudRoomTitle').textContent = roomTitles[roomKey];
+      syncRoomLighting();
+    }
+
+    function toggleLoad(key, el, event) {
+      appState.loads[key] = !appState.loads[key];
+      appState.scene = 'custom';
+      playCapacitiveClick(appState.loads[key]);
+      spawnRipple(el, event);
+      updateScenePills();
+      renderTouchPlate();
+      syncRoomLighting();
+    }
+
+    function changeFan(delta, el, event) {
+      appState.fanSpeed = Math.max(0, Math.min(4, appState.fanSpeed + delta));
+      appState.scene = 'custom';
+      playCapacitiveClick(appState.fanSpeed > 0);
+      spawnRipple(el, event);
+      updateScenePills();
+      renderTouchPlate();
+      syncRoomLighting();
+    }
+
+    function applyScene(sceneKey) {
+      appState.scene = sceneKey;
+      playCapacitiveClick(sceneKey !== 'alloff');
+
+      if (sceneKey === 'welcome') {
+        Object.assign(appState.loads, {
+          cove: true, lamp: true, chandelier: false, washers: false,
+          strip: false, ambient: false, ac: false, curtain: false, socket1: true, socket2: false
+        });
+        appState.fanSpeed = 2;
+      } else if (sceneKey === 'dinner') {
+        Object.assign(appState.loads, {
+          cove: true, lamp: true, chandelier: true, washers: true,
+          strip: false, ambient: false, ac: true, curtain: false, socket1: true, socket2: true
+        });
+        appState.fanSpeed = 3;
+      } else if (sceneKey === 'cinema') {
+        Object.assign(appState.loads, {
+          cove: false, lamp: false, chandelier: false, washers: false,
+          strip: true, ambient: true, ac: true, curtain: true, socket1: true, socket2: false
+        });
+        appState.fanSpeed = 1;
+      } else if (sceneKey === 'alloff') {
+        Object.keys(appState.loads).forEach(k => (appState.loads[k] = false));
+        appState.fanSpeed = 0;
+      }
+
+      updateScenePills();
+      renderTouchPlate();
+      syncRoomLighting();
+    }
+
+    function updateScenePills() {
+      const activeStyles = {
+        welcome: 'group flex flex-col items-start text-left p-4 sm:p-5 rounded-2xl transition-all duration-200 bg-amber-500/20 text-amber-200 border border-amber-400/60 shadow-lg shadow-amber-500/15',
+        dinner: 'group flex flex-col items-start text-left p-4 sm:p-5 rounded-2xl transition-all duration-200 bg-amber-500/20 text-amber-200 border border-amber-400/60 shadow-lg shadow-amber-500/15',
+        cinema: 'group flex flex-col items-start text-left p-4 sm:p-5 rounded-2xl transition-all duration-200 bg-sky-500/20 text-sky-200 border border-sky-400/60 shadow-lg shadow-sky-500/15',
+        alloff: 'group flex flex-col items-start text-left p-4 sm:p-5 rounded-2xl transition-all duration-200 bg-rose-500/20 text-rose-200 border border-rose-400/60 shadow-lg shadow-rose-500/15'
+      };
+      const defaultStyle = 'group flex flex-col items-start text-left p-4 sm:p-5 rounded-2xl transition-all duration-200 bg-white/[0.04] hover:bg-white/[0.09] text-gray-200 border border-white/10 hover:border-white/25';
+
+      ['welcome', 'dinner', 'cinema', 'alloff'].forEach(s => {
+        const btn = document.getElementById(`scene-btn-${s}`);
+        if (!btn) return;
+        btn.className = s === appState.scene ? activeStyles[s] : defaultStyle;
+      });
+    }
+
+    function setPanelFinish(finish) {
+      appState.finish = finish;
+      playCapacitiveClick(true);
+
+      const plate = document.getElementById('magneticPlate');
+      const stage = document.getElementById('panelWallStage');
+      plate.classList.remove('plate-black', 'plate-grey', 'plate-white');
+      stage.classList.remove('wall-walnut', 'wall-concrete', 'wall-marble');
+
+      if (finish === 'black') {
+        plate.classList.add('plate-black');
+        stage.classList.add('wall-walnut');
+      } else if (finish === 'grey') {
+        plate.classList.add('plate-grey');
+        stage.classList.add('wall-concrete');
+      } else {
+        plate.classList.add('plate-white');
+        stage.classList.add('wall-marble');
+      }
+
+      ['black', 'grey', 'white'].forEach(f => {
+        const btn = document.getElementById(`fin-btn-${f}`);
+        btn.className = f === finish
+          ? 'flex items-center justify-center gap-2 py-2 px-2.5 rounded-xl text-xs font-semibold bg-white/15 border border-amber-400/60 text-white transition'
+          : 'flex items-center justify-center gap-2 py-2 px-2.5 rounded-xl text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition';
+      });
+
+      renderTouchPlate();
+    }
+
+    function setBrochureModel(model) {
+      appState.model = model;
+      playCapacitiveClick(true);
+      renderTouchPlate();
+    }
+
+    function renderTouchPlate() {
+      const container = document.getElementById('touchPlateContent');
+      const isWhite = appState.finish === 'white';
+      const labelColor = isWhite ? 'text-slate-700' : 'text-gray-200/90';
+      const subTagColor = isWhite ? 'text-amber-700 bg-amber-500/15' : 'text-amber-300/90 bg-amber-400/10';
+      const iconStroke = isWhite ? '#334155' : '#e5e7eb';
+
+      let switchKeys = [];
+      let hasFan = false;
+      let socketCount = 0;
+      let gridCols = 'grid-cols-2';
+
+      if (appState.model === 'no01') {
+        // 2M — 2 Switch
+        switchKeys = ['cove', 'chandelier'];
+        hasFan = false;
+        gridCols = 'grid-cols-1';
+      } else if (appState.model === 'no03') {
+        // 4M — 4 Switch + 1 Fan
+        switchKeys = ['cove', 'chandelier', 'lamp', 'ac'];
+        hasFan = true;
+        gridCols = 'grid-cols-2';
+      } else if (appState.model === 'no09') {
+        // 6M — 10 Switch
+        switchKeys = ['cove', 'chandelier', 'washers', 'lamp', 'strip', 'ambient', 'ac', 'curtain', 'socket1', 'socket2'];
+        hasFan = false;
+        gridCols = 'grid-cols-5';
+      } else if (appState.model === 'no14') {
+        // 12M — 20 Switch + 2 Socket
+        switchKeys = ['cove', 'chandelier', 'washers', 'lamp', 'strip', 'ambient', 'ac', 'curtain'];
+        socketCount = 2;
+        gridCols = 'grid-cols-4';
+      }
+
+      const sensorDots = Array.from({ length: 25 })
+        .map(() => `<span class="w-[2.5px] h-[2.5px] rounded-full ${isWhite ? 'bg-slate-600/70' : 'bg-amber-200/80'}"></span>`)
+        .join('');
+
+      const switchesHtml = switchKeys.map(key => {
+        const item = fixtureMap[key];
+        const isOn = appState.loads[key];
+        const pillState = isOn ? (item.color === 'cyan' ? 'on-cyan' : 'on-amber') : 'off';
+        return `
+          <div onclick="toggleLoad('${key}', this, event)" class="touch-pad flex flex-col items-center justify-center py-2.5 px-1.5">
+            <div class="led-pill ${pillState} mb-2"></div>
+            <span class="text-[10px] font-semibold tracking-tight text-center leading-tight ${labelColor}">${item.label}</span>
+            ${item.tag ? `<span class="mt-1 px-1.5 py-0.2 rounded text-[8px] font-bold tracking-wider ${subTagColor}">${item.tag}</span>` : ''}
+          </div>
+        `;
+      }).join('');
+
+      const fanBarsHtml = [4, 3, 2, 1].map(step => {
+        const active = appState.fanSpeed >= step;
+        const barColor = active
+          ? (isWhite ? 'bg-amber-600 shadow-[0_0_8px_rgba(217,119,6,0.7)]' : 'bg-amber-300 shadow-[0_0_8px_#fbbf24]')
+          : (isWhite ? 'bg-slate-400/40' : 'bg-white/25');
+        return `<span class="w-1.5 h-3.5 rounded-full transition-all ${barColor}"></span>`;
+      }).join('');
+
+      const fanHtml = hasFan ? `
+        <div class="flex items-center justify-center gap-3 pl-3 border-l ${isWhite ? 'border-slate-300/80' : 'border-white/10'}">
+          <div class="flex flex-col items-center gap-1.5">
+            <svg viewBox="0 0 24 24" class="w-6 h-6 ${appState.fanSpeed > 0 ? 'fan-' + appState.fanSpeed : ''}" fill="${appState.fanSpeed > 0 ? (isWhite ? '#d97706' : '#fcd34d') : iconStroke}">
+              <path d="M12 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-1.5-2.2C9.4 6.7 10.4 3 12.5 3c1.9 0 2.3 2.5.8 4.6-.5.7-.9 1.3-1.1 1.8-.6-.3-1.2-.5-1.7-.6zm4.7 1.7c2.1-1.1 5.8-.1 5.8 2 0 1.9-2.5 2.3-4.6.8-.7-.5-1.3-.9-1.8-1.1.3-.6.5-1.2.6-1.7zm-1.7 4.7c1.1 2.1.1 5.8-2 5.8-1.9 0-2.3-2.5-.8-4.6.5-.7.9-1.3 1.1-1.8.6.3 1.2.5 1.7.6zm-4.7-1.7c-2.1 1.1-5.8.1-5.8-2 0-1.9 2.5-2.3 4.6-.8.7.5 1.3.9 1.8 1.1-.3.6-.5 1.2-.6 1.7z"/>
+            </svg>
+            <span class="text-[9px] font-bold uppercase tracking-wider ${labelColor}">Fan ${appState.fanSpeed > 0 ? appState.fanSpeed : 'Off'}</span>
+          </div>
+
+          <div class="flex flex-col items-center gap-2">
+            <button onclick="changeFan(1, this, event)" aria-label="Increase Fan Speed" class="touch-pad p-2">
+              <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="${iconStroke}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+            </button>
+            <button onclick="changeFan(-1, this, event)" aria-label="Decrease Fan Speed" class="touch-pad p-2">
+              <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="${iconStroke}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <div class="flex flex-col gap-1.5">${fanBarsHtml}</div>
+        </div>
+      ` : '';
+
+      const socketsHtml = socketCount > 0 ? `
+        <div class="flex items-center justify-center gap-3 pl-3 border-l ${isWhite ? 'border-slate-300/80' : 'border-white/10'}">
+          ${Array.from({ length: socketCount }).map((_, idx) => {
+            const sKey = idx === 0 ? 'socket1' : 'socket2';
+            const sActive = appState.loads[sKey];
+            const ringColor = sActive ? 'ring-2 ring-amber-400/80' : '';
+            return `
+              <div onclick="toggleLoad('${sKey}', this, event)" class="touch-pad flex flex-col items-center gap-1.5 p-2">
+                <div class="w-11 h-11 rounded-full flex flex-col items-center justify-center gap-1.5 ${isWhite ? 'bg-slate-200/90 border border-slate-300' : 'bg-black/50 border border-white/15'} ${ringColor}">
+                  <span class="w-2 h-2 rounded-full bg-neutral-950 border border-white/25"></span>
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-950 border border-white/25"></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-950 border border-white/25"></span>
+                  </div>
+                </div>
+                <span class="text-[9px] font-semibold ${labelColor}">Socket ${idx + 1}</span>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      ` : '';
+
+      container.innerHTML = `
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[9px] font-bold tracking-[0.2em] uppercase ${isWhite ? 'text-slate-500' : 'text-white/45'}">MAGNETIC+</span>
+          <div class="grid grid-cols-5 gap-[2.5px] opacity-85" title="Capacitive Proximity Sensor">${sensorDots}</div>
+        </div>
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex-1 grid ${gridCols} gap-1.5">
+            ${switchesHtml}
+          </div>
+          ${fanHtml}
+          ${socketsHtml}
+        </div>
+      `;
+    }
+
+    function syncRoomLighting() {
+      const L = appState.loads;
+
+      document.getElementById('glow-cove').style.opacity = L.cove ? '1' : '0';
+      document.getElementById('glow-chandelier').style.opacity = L.chandelier ? '1' : '0';
+      document.getElementById('glow-washers').style.opacity = L.washers ? '1' : '0';
+      document.getElementById('glow-lamp').style.opacity = L.lamp ? '1' : '0';
+      document.getElementById('glow-strip').style.opacity = L.strip ? '1' : '0';
+      document.getElementById('glow-ambient').style.opacity = L.ambient ? '1' : '0';
+
+      document.getElementById('svg-cove').setAttribute('stroke', L.cove ? '#fde68a' : '#323746');
+      document.getElementById('svg-chandelier').setAttribute('stroke', L.chandelier ? '#fef08a' : '#4b5563');
+
+      ['svg-washer-1', 'svg-washer-2', 'svg-washer-3'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.setAttribute('fill', L.washers ? '#fef3c7' : '#272b36');
+      });
+
+      const livingLamp = document.getElementById('svg-living-lamp');
+      if (livingLamp) livingLamp.setAttribute('fill', L.lamp ? '#fbbf24' : '#3f3f46');
+
+      const bedLamp = document.getElementById('svg-bed-lamp');
+      if (bedLamp) bedLamp.setAttribute('fill', L.lamp ? '#fbbf24' : '#4b5563');
+
+      const tvGlow = document.getElementById('svg-tv-glow');
+      if (tvGlow) tvGlow.setAttribute('stroke-width', L.ambient ? '3' : '0');
+
+      const acDot = document.getElementById('svg-ac-indicator');
+      if (acDot) acDot.setAttribute('fill', L.ac ? '#38bdf8' : '#6b7280');
+
+      const curtain = document.getElementById('curtainDrape');
+      if (curtain) curtain.style.transform = L.curtain ? 'translateX(0%)' : 'translateX(82%)';
+
+      const rotor = document.getElementById('svg-fan-rotor');
+      if (rotor) {
+        rotor.classList.remove('fan-1', 'fan-2', 'fan-3', 'fan-4');
+        if (appState.fanSpeed > 0) rotor.classList.add(`fan-${appState.fanSpeed}`);
+      }
+
+      const activeLightCount = ['cove', 'chandelier', 'washers', 'lamp', 'strip', 'ambient'].filter(k => L[k]).length;
+      const floorSheen = document.getElementById('svg-floor-sheen');
+      if (floorSheen) {
+        floorSheen.setAttribute('fill', activeLightCount > 0 ? `rgba(251, 191, 36, ${Math.min(0.18, activeLightCount * 0.035)})` : 'rgba(255,255,255,0.01)');
+      }
+
+      let activeLoads = Object.keys(L).filter(k => L[k]).length + (appState.fanSpeed > 0 ? 1 : 0);
+      let totalWatts = Object.keys(L).reduce((sum, k) => sum + (L[k] ? fixtureMap[k].watts : 0), 0) + (appState.fanSpeed * 18);
+
+      document.getElementById('hudActiveLoads').textContent = `${activeLoads} Active Load${activeLoads === 1 ? '' : 's'}`;
+      document.getElementById('hudWattage').textContent = `${totalWatts}W`;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderTouchPlate();
+      syncRoomLighting();
+    });
+  </script>
+</body>
+</html>
