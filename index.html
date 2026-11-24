@@ -53,10 +53,12 @@
         linear-gradient(145deg, #454952 0%, #272a30 55%, #1a1c21 100%);
     }
 
-    .wall-marble {
+    /* High-contrast dark charcoal architectural slate wall so the White Glass Panel stands out crisply */
+    .wall-slate {
       background:
-        linear-gradient(125deg, transparent 38%, rgba(155, 160, 170, 0.2) 41%, transparent 48%),
-        radial-gradient(circle at 20% 20%, #ffffff 0%, #eceef2 45%, #d5d9e2 100%);
+        radial-gradient(circle at 50% 25%, rgba(71, 85, 105, 0.35), transparent 65%),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 42px),
+        linear-gradient(145deg, #272c36 0%, #171a21 55%, #0e1015 100%);
     }
 
     /* Magnetic+ 3mm Toughened Glass Switch Plate */
@@ -103,7 +105,7 @@
 
     .plate-white {
       background: linear-gradient(160deg, #fcfcfd 0%, #eef0f4 55%, #e2e5ec 100%);
-      box-shadow: 0 22px 45px -12px rgba(15, 23, 42, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+      box-shadow: 0 28px 55px -10px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.65), inset 0 1px 2px rgba(255, 255, 255, 0.95);
     }
 
     /* Vertical Capacitive Touch Pill LEDs */
@@ -198,6 +200,15 @@
     .fan-2 { animation: spinBlades 1.5s linear infinite; }
     .fan-3 { animation: spinBlades 0.9s linear infinite; }
     .fan-4 { animation: spinBlades 0.45s linear infinite; }
+
+    /* Interactive Guided Tour Spotlight */
+    .tour-highlight-target {
+      position: relative !important;
+      z-index: 60 !important;
+      box-shadow: 0 0 0 3px #fbbf24, 0 0 38px rgba(251, 191, 36, 0.55) !important;
+      border-radius: 20px;
+      transition: box-shadow 0.35s ease;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-amber-500/30 selection:text-amber-200">
@@ -228,22 +239,22 @@
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <span class="font-bold tracking-wide text-base sm:text-lg text-white">A PLUS <span class="font-light text-sky-400">SMART LIFE</span></span>
-          </div>
-          <p class="text-[10px] sm:text-[11px] font-semibold tracking-[0.14em] uppercase text-gray-400">
-            VIRTUAL EXPERIENCE CENTER • MAGNETIC+ GLASS TOUCH
-          </p>
-        </div>
-      </div>
+      <!-- Right Status Pill + Replay Guided Tour Button -->
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <button type="button" onclick="startGuidedTour(true)" id="headerTourBtn"
+          class="px-3 sm:px-3.5 py-2 rounded-full text-[11px] sm:text-xs font-bold bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400/50 text-amber-300 flex items-center gap-1.5 transition cursor-pointer shadow-sm">
+          <span>🧭</span>
+          <span>Guided Tour</span>
+        </button>
 
-      <!-- Right Status Pill: Live Virtual Showroom -->
-      <div class="px-3.5 sm:px-4 py-2 rounded-full text-[11px] sm:text-xs font-semibold tracking-wide bg-white/[0.04] border border-white/15 text-gray-200 flex items-center gap-2.5 shrink-0 shadow-inner">
-        <span class="relative flex h-2.5 w-2.5">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
-        </span>
-        <span class="hidden sm:inline">LIVE VIRTUAL SHOWROOM • 230V AC VOICE READY</span>
-        <span class="sm:hidden">LIVE SHOWROOM</span>
+        <div class="px-3.5 sm:px-4 py-2 rounded-full text-[11px] sm:text-xs font-semibold tracking-wide bg-white/[0.04] border border-white/15 text-gray-200 flex items-center gap-2.5 shadow-inner">
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+          </span>
+          <span class="hidden sm:inline">LIVE VIRTUAL SHOWROOM</span>
+          <span class="sm:hidden">LIVE SHOWROOM</span>
+        </div>
       </div>
     </div>
   </header>
@@ -257,8 +268,12 @@
     <section class="lg:col-span-7 flex flex-col gap-4">
 
       <!-- Room Selector Pill Tabs -->
-      <div class="flex flex-wrap items-center justify-between gap-2">
-        <div class="inline-flex items-center p-1 rounded-2xl glass-card gap-1" role="tablist">
+      <div id="tour-step-rooms" class="flex flex-wrap items-center justify-between gap-2 p-1 rounded-2xl">
+        <div class="inline-flex flex-wrap items-center p-1 rounded-2xl glass-card gap-1" role="tablist">
+          <button onclick="selectRoom('exterior')" id="room-tab-exterior"
+            class="px-3.5 py-1.5 rounded-xl text-xs font-medium transition text-gray-400 hover:text-white border border-transparent">
+            Home Exterior
+          </button>
           <button onclick="selectRoom('living')" id="room-tab-living"
             class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition bg-amber-500/20 text-amber-300 border border-amber-400/40">
             Luxury Living Room
@@ -274,20 +289,20 @@
         </div>
 
         <span class="hidden sm:inline-block text-xs text-gray-400">
-          Tap switches on the right to control room lighting live
+          Tap switches on the right to control lighting live
         </span>
       </div>
 
-      <!-- Architectural Luxury Room Viewport -->
-      <div class="relative w-full aspect-[16/10] rounded-3xl overflow-hidden border border-white/15 shadow-2xl bg-[#08090d] select-none">
+      <!-- Architectural Luxury Room & Home Exterior Viewport -->
+      <div id="tour-step-viewport" class="relative w-full aspect-[16/10] rounded-3xl overflow-hidden border border-white/15 shadow-2xl bg-[#08090d] select-none">
 
         <!-- Base Architectural Shell -->
         <div id="roomShellBg" class="light-layer absolute inset-0"
           style="background: linear-gradient(180deg, #111319 0%, #181b23 58%, #0d0f14 58%, #08090d 100%);">
         </div>
 
-        <!-- Back Architectural Wall (Fluted Wood + Stone + Panoramic Dusk Window) -->
-        <div class="absolute inset-x-[12%] top-[14%] bottom-[26%] grid grid-cols-12">
+        <!-- Back Architectural Wall (Interior Rooms Only) -->
+        <div id="interiorBackWall" class="absolute inset-x-[12%] top-[14%] bottom-[26%] grid grid-cols-12">
           <!-- Left Fluted Timber -->
           <div class="col-span-3 h-full border-r border-black/40"
             style="background: repeating-linear-gradient(90deg, #1b120d 0px, #2b1d14 8px, #130c08 10px);">
@@ -312,6 +327,15 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- Night Sky Backdrop (Visible in Home Exterior View) -->
+        <div id="exteriorSkyBackdrop" class="hidden absolute inset-0 pointer-events-none"
+          style="background: radial-gradient(circle at 75% 22%, rgba(56, 189, 248, 0.14), transparent 45%), linear-gradient(180deg, #060913 0%, #0f172a 62%, #090d16 62%, #05070c 100%);">
+          <span class="absolute top-8 left-[18%] w-1 h-1 rounded-full bg-white/70"></span>
+          <span class="absolute top-14 left-[34%] w-1 h-1 rounded-full bg-white/50"></span>
+          <span class="absolute top-7 left-[58%] w-1.5 h-1.5 rounded-full bg-amber-100/70"></span>
+          <span class="absolute top-16 left-[82%] w-1 h-1 rounded-full bg-white/60"></span>
         </div>
 
         <!-- Dynamic Lighting Glow Halos (0.6s Smooth Transitions) -->
@@ -352,44 +376,103 @@
             </linearGradient>
           </defs>
 
-          <!-- Perspective Ceiling Tray & Cove Strip -->
-          <polygon points="0,0 800,0 704,63 96,63" fill="#0c0e13" stroke="#222632" stroke-width="1" />
-          <line id="svg-cove" x1="102" y1="61" x2="698" y2="61" stroke="#323746" stroke-width="3" stroke-linecap="round" />
+          <!-- Shared Interior Ceiling, Fan, AC & Floor (Hidden in Home Exterior Mode) -->
+          <g id="interiorSharedShell">
+            <!-- Perspective Ceiling Tray & Cove Strip -->
+            <polygon points="0,0 800,0 704,63 96,63" fill="#0c0e13" stroke="#222632" stroke-width="1" />
+            <line id="svg-cove" x1="102" y1="61" x2="698" y2="61" stroke="#323746" stroke-width="3" stroke-linecap="round" />
 
-          <!-- Wall Washer Spotlights -->
-          <ellipse id="svg-washer-1" cx="195" cy="34" rx="12" ry="4" fill="#272b36" />
-          <ellipse id="svg-washer-2" cx="400" cy="34" rx="12" ry="4" fill="#272b36" />
-          <ellipse id="svg-washer-3" cx="605" cy="34" rx="12" ry="4" fill="#272b36" />
+            <!-- Wall Washer Spotlights -->
+            <ellipse id="svg-washer-1" cx="195" cy="34" rx="12" ry="4" fill="#272b36" />
+            <ellipse id="svg-washer-2" cx="400" cy="34" rx="12" ry="4" fill="#272b36" />
+            <ellipse id="svg-washer-3" cx="605" cy="34" rx="12" ry="4" fill="#272b36" />
 
-          <!-- Halo Pendant Chandelier -->
-          <line x1="362" y1="22" x2="362" y2="95" stroke="#52525b" stroke-width="1.5" />
-          <line x1="438" y1="22" x2="438" y2="95" stroke="#52525b" stroke-width="1.5" />
-          <ellipse cx="400" cy="102" rx="68" ry="12" fill="none" stroke="url(#warmBrass)" stroke-width="4" />
-          <ellipse id="svg-chandelier" cx="400" cy="104" rx="64" ry="10" fill="none" stroke="#4b5563" stroke-width="2.5" />
+            <!-- Halo Pendant Chandelier -->
+            <line x1="362" y1="22" x2="362" y2="95" stroke="#52525b" stroke-width="1.5" />
+            <line x1="438" y1="22" x2="438" y2="95" stroke="#52525b" stroke-width="1.5" />
+            <ellipse cx="400" cy="102" rx="68" ry="12" fill="none" stroke="url(#warmBrass)" stroke-width="4" />
+            <ellipse id="svg-chandelier" cx="400" cy="104" rx="64" ry="10" fill="none" stroke="#4b5563" stroke-width="2.5" />
 
-          <!-- Animated Designer Ceiling Fan -->
-          <g transform="translate(615, 76)">
-            <line x1="0" y1="-44" x2="0" y2="-8" stroke="#52525b" stroke-width="3" />
-            <g id="svg-fan-rotor">
-              <ellipse cx="-38" cy="0" rx="34" ry="5" fill="#3f3f46" stroke="#71717a" stroke-width="0.8" />
-              <ellipse cx="38" cy="0" rx="34" ry="5" fill="#3f3f46" stroke="#71717a" stroke-width="0.8" />
-              <ellipse cx="0" cy="-14" rx="7" ry="12" fill="#27272a" />
-              <ellipse cx="0" cy="14" rx="7" ry="12" fill="#27272a" />
+            <!-- Animated Designer Ceiling Fan (Only Room Fan Rotates) -->
+            <g transform="translate(615, 76)">
+              <line x1="0" y1="-44" x2="0" y2="-8" stroke="#52525b" stroke-width="3" />
+              <g id="svg-fan-rotor">
+                <ellipse cx="-38" cy="0" rx="34" ry="5" fill="#3f3f46" stroke="#71717a" stroke-width="0.8" />
+                <ellipse cx="38" cy="0" rx="34" ry="5" fill="#3f3f46" stroke="#71717a" stroke-width="0.8" />
+                <ellipse cx="0" cy="-14" rx="7" ry="12" fill="#27272a" />
+                <ellipse cx="0" cy="14" rx="7" ry="12" fill="#27272a" />
+              </g>
+              <circle cx="0" cy="0" r="9" fill="url(#warmBrass)" />
             </g>
-            <circle cx="0" cy="0" r="9" fill="url(#warmBrass)" />
+
+            <!-- Heavy Duty 25A Split Inverter AC -->
+            <g transform="translate(115, 86)">
+              <rect x="0" y="0" width="110" height="27" rx="6" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1" />
+              <line x1="8" y1="20" x2="102" y2="20" stroke="#4b5563" stroke-width="2" />
+              <circle id="svg-ac-indicator" cx="94" cy="10" r="2.5" fill="#6b7280" />
+              <text x="12" y="13" font-size="6.5" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="#374151">25A HEAVY DUTY</text>
+            </g>
+
+            <!-- Luxury Perspective Flooring -->
+            <polygon points="96,333 704,333 800,450 0,450" fill="url(#floorPerspective)" />
+            <ellipse id="svg-floor-sheen" cx="400" cy="390" rx="260" ry="36" fill="rgba(251, 191, 36, 0.03)" />
           </g>
 
-          <!-- Heavy Duty 25A Split Inverter AC -->
-          <g transform="translate(115, 86)">
-            <rect x="0" y="0" width="110" height="27" rx="6" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1" />
-            <line x1="8" y1="20" x2="102" y2="20" stroke="#4b5563" stroke-width="2" />
-            <circle id="svg-ac-indicator" cx="94" cy="10" r="2.5" fill="#6b7280" />
-            <text x="12" y="13" font-size="6.5" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="#374151">25A HEAVY DUTY</text>
-          </g>
+          <!-- ROOM 0: MODERN LUXURY HOME EXTERIOR (VILLA FACADE) -->
+          <g id="scene-exterior" style="display: none;">
+            <!-- Paved Driveway & Landscape Lawn -->
+            <rect x="0" y="330" width="800" height="120" fill="#0c1017" />
+            <polygon points="270,330 530,330 620,450 180,450" fill="#181c26" stroke="#262c3a" stroke-width="1" />
+            <!-- Lawn Strips -->
+            <rect x="0" y="330" width="230" height="26" fill="#0d231a" />
+            <rect x="570" y="330" width="230" height="26" fill="#0d231a" />
 
-          <!-- Luxury Perspective Flooring -->
-          <polygon points="96,333 704,333 800,450 0,450" fill="url(#floorPerspective)" />
-          <ellipse id="svg-floor-sheen" cx="400" cy="390" rx="260" ry="36" fill="rgba(251, 191, 36, 0.03)" />
+            <!-- Ground Floor Modern Concrete & Timber Structure -->
+            <rect x="130" y="195" width="540" height="135" fill="#181b24" stroke="#2e3342" stroke-width="1.5" />
+            <!-- Timber Cladding Wing -->
+            <rect x="130" y="195" width="145" height="135" fill="#2b1a10" stroke="#452919" stroke-width="1" />
+            <!-- Upper Cantilevered Architectural Volume -->
+            <rect x="175" y="96" width="465" height="102" fill="#202430" stroke="#383e50" stroke-width="1.5" />
+            <!-- Roof Overhang & Facade Cove LED Line -->
+            <rect x="158" y="88" width="500" height="10" rx="2" fill="#11131a" />
+            <line id="svg-ext-cove" x1="164" y1="98" x2="652" y2="98" stroke="#374151" stroke-width="3.5" stroke-linecap="round" />
+
+            <!-- Upper Floor Panoramic Glass Windows -->
+            <rect x="205" y="114" width="175" height="68" rx="3" fill="#0b1220" stroke="#475569" stroke-width="1.5" />
+            <rect id="svg-ext-win-1" x="208" y="117" width="169" height="62" fill="rgba(251, 191, 36, 0.04)" />
+            <rect x="405" y="114" width="205" height="68" rx="3" fill="#0b1220" stroke="#475569" stroke-width="1.5" />
+            <rect id="svg-ext-win-2" x="408" y="117" width="199" height="62" fill="rgba(251, 191, 36, 0.04)" />
+
+            <!-- Ground Floor Lounge Glass & Grand Entrance Door -->
+            <rect x="305" y="216" width="185" height="114" fill="#0b1220" stroke="#475569" stroke-width="1.5" />
+            <rect id="svg-ext-win-3" x="308" y="219" width="179" height="108" fill="rgba(251, 191, 36, 0.05)" />
+            <!-- Main Entrance Teak Door & Porch Pendant -->
+            <rect x="525" y="222" width="76" height="108" fill="#3a2113" stroke="#78472a" stroke-width="1.5" />
+            <circle id="svg-ext-porch" cx="563" cy="208" r="6" fill="#4b5563" />
+
+            <!-- Exterior Architectural Pillar Washers -->
+            <polygon id="svg-ext-washer-1" points="195,198 182,328 208,328" fill="rgba(254, 243, 199, 0.02)" />
+            <polygon id="svg-ext-washer-2" points="635,198 622,328 648,328" fill="rgba(254, 243, 199, 0.02)" />
+
+            <!-- Driveway Cyan LED Accent Strip -->
+            <line id="svg-ext-strip" x1="255" y1="333" x2="545" y2="333" stroke="#1e293b" stroke-width="3" />
+
+            <!-- Garden Bollard Lamp -->
+            <rect x="102" y="294" width="10" height="36" rx="2" fill="#272b36" />
+            <circle id="svg-ext-lamp" cx="107" cy="296" r="5" fill="#4b5563" />
+
+            <!-- Compound Wall & Motorized Sliding Gate -->
+            <rect x="40" y="314" width="230" height="34" fill="#171a22" stroke="#2d3342" stroke-width="1" />
+            <rect x="530" y="314" width="230" height="34" fill="#171a22" stroke="#2d3342" stroke-width="1" />
+            <g id="svg-ext-gate" style="transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);">
+              <rect x="272" y="316" width="256" height="32" fill="#1f2430" stroke="#64748b" stroke-width="1.5" />
+              <line x1="315" y1="316" x2="315" y2="348" stroke="#475569" stroke-width="1.5" />
+              <line x1="358" y1="316" x2="358" y2="348" stroke="#475569" stroke-width="1.5" />
+              <line x1="400" y1="316" x2="400" y2="348" stroke="#475569" stroke-width="1.5" />
+              <line x1="442" y1="316" x2="442" y2="348" stroke="#475569" stroke-width="1.5" />
+              <line x1="485" y1="316" x2="485" y2="348" stroke="#475569" stroke-width="1.5" />
+            </g>
+          </g>
 
           <!-- ROOM 1: LUXURY LIVING ROOM -->
           <g id="scene-living">
@@ -455,7 +538,7 @@
       </div>
 
       <!-- 3. PROMINENT SMART MOOD SCENES SHOWCASE -->
-      <div class="glass-card rounded-3xl p-5 sm:p-6 border border-white/15 shadow-2xl shadow-black/40 flex flex-col gap-4 relative overflow-hidden">
+      <div id="tour-step-scenes" class="glass-card rounded-3xl p-5 sm:p-6 border border-white/15 shadow-2xl shadow-black/40 flex flex-col gap-4 relative overflow-hidden">
         <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent pointer-events-none"></div>
 
         <div class="flex flex-wrap items-center justify-between gap-2">
@@ -504,7 +587,7 @@
     <aside class="lg:col-span-5 flex flex-col gap-4">
 
       <!-- Finish Switcher & Brochure Model Selector -->
-      <div class="glass-card rounded-2xl p-4 flex flex-col gap-3">
+      <div id="tour-step-finish" class="glass-card rounded-2xl p-4 flex flex-col gap-3">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold uppercase tracking-wider text-gray-300">Panel Glass Finish</span>
           <span class="text-[11px] text-amber-300/90 font-medium">3mm Toughened Glass</span>
@@ -571,6 +654,48 @@
   </main>
 
   <!-- ======================================================================
+       FIRST-TIME USER INTERACTIVE GUIDED TOUR OVERLAY & FLOATING CARD
+       ====================================================================== -->
+  <div id="guidedTourBackdrop" class="fixed inset-0 z-50 hidden bg-black/65 backdrop-blur-[2px] transition-opacity duration-300"></div>
+
+  <div id="guidedTourCard" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[70] hidden w-[92%] max-w-lg rounded-3xl glass-panel bg-[#10141f]/95 border border-amber-400/60 p-5 sm:p-6 shadow-2xl shadow-black/90">
+    <div class="flex items-center justify-between gap-2 mb-2.5">
+      <div class="flex items-center gap-2">
+        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/40" id="tourStepCounter">
+          Step 1 of 5
+        </span>
+        <span class="text-[11px] font-semibold text-gray-400">Virtual Experience Guide</span>
+      </div>
+      <button type="button" onclick="endGuidedTour()" class="text-xs font-semibold text-gray-400 hover:text-white px-2 py-1 rounded-lg hover:bg-white/10 transition cursor-pointer">
+        Skip Tour ✕
+      </button>
+    </div>
+
+    <h3 id="tourStepTitle" class="text-base sm:text-lg font-bold text-white mb-1.5">
+      Welcome to A Plus Smart Life
+    </h3>
+    <p id="tourStepDesc" class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-4">
+      Explore how our Magnetic+ 3mm Toughened Glass touch panels control real architectural spaces live.
+    </p>
+
+    <!-- Progress Dots + Back / Next Buttons -->
+    <div class="flex items-center justify-between gap-3 pt-3 border-t border-white/10">
+      <div id="tourDotsContainer" class="flex items-center gap-1.5"></div>
+
+      <div class="flex items-center gap-2">
+        <button type="button" id="tourPrevBtn" onclick="prevTourStep()"
+          class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/15 text-gray-300 border border-white/10 transition cursor-pointer">
+          ← Back
+        </button>
+        <button type="button" id="tourNextBtn" onclick="nextTourStep()"
+          class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-gray-950 shadow-md shadow-amber-500/20 transition cursor-pointer">
+          Next Step →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
        INTERACTIVE ENGINE (LIGHTING, PANEL SIMULATOR & WEB AUDIO CHIME)
        ====================================================================== -->
   <script>
@@ -609,6 +734,7 @@
     };
 
     const roomTitles = {
+      exterior: 'Home Exterior • Smart Villa Facade',
       living: 'Luxury Living Room',
       bedroom: 'Master Suite',
       office: 'Executive Office'
@@ -669,7 +795,16 @@
       appState.room = roomKey;
       playCapacitiveClick(true);
 
-      ['living', 'bedroom', 'office'].forEach(key => {
+      const isExterior = roomKey === 'exterior';
+      const interiorWall = document.getElementById('interiorBackWall');
+      const interiorShell = document.getElementById('interiorSharedShell');
+      const exteriorSky = document.getElementById('exteriorSkyBackdrop');
+
+      if (interiorWall) interiorWall.style.display = isExterior ? 'none' : 'grid';
+      if (interiorShell) interiorShell.style.display = isExterior ? 'none' : 'block';
+      if (exteriorSky) exteriorSky.style.display = isExterior ? 'block' : 'none';
+
+      ['exterior', 'living', 'bedroom', 'office'].forEach(key => {
         const tab = document.getElementById(`room-tab-${key}`);
         const sceneGroup = document.getElementById(`scene-${key}`);
         if (key === roomKey) {
@@ -682,6 +817,7 @@
       });
 
       document.getElementById('hudRoomTitle').textContent = roomTitles[roomKey];
+      renderTouchPlate();
       syncRoomLighting();
     }
 
@@ -760,7 +896,7 @@
       const plate = document.getElementById('magneticPlate');
       const stage = document.getElementById('panelWallStage');
       plate.classList.remove('plate-black', 'plate-grey', 'plate-white');
-      stage.classList.remove('wall-walnut', 'wall-concrete', 'wall-marble');
+      stage.classList.remove('wall-walnut', 'wall-concrete', 'wall-slate');
 
       if (finish === 'black') {
         plate.classList.add('plate-black');
@@ -770,7 +906,7 @@
         stage.classList.add('wall-concrete');
       } else {
         plate.classList.add('plate-white');
-        stage.classList.add('wall-marble');
+        stage.classList.add('wall-slate');
       }
 
       ['black', 'grey', 'white'].forEach(f => {
@@ -828,14 +964,28 @@
         .join('');
 
       const switchesHtml = switchKeys.map(key => {
+        const isExt = appState.room === 'exterior';
+        const extNames = {
+          cove: { label: 'Facade Cove', tag: '' },
+          chandelier: { label: 'Porch Light', tag: '' },
+          washers: { label: 'Pillar Wash', tag: '' },
+          lamp: { label: 'Garden Lamp', tag: '' },
+          strip: { label: 'Driveway LED', tag: '' },
+          ambient: { label: 'Window Glow', tag: '' },
+          curtain: { label: 'Main Gate', tag: 'MOTOR' }
+        };
         const item = fixtureMap[key];
+        const displayLabel = (isExt && extNames[key]) ? extNames[key].label : item.label;
+        const displayTag = (isExt && extNames[key]) ? extNames[key].tag : item.tag;
         const isOn = appState.loads[key];
         const pillState = isOn ? (item.color === 'cyan' ? 'on-cyan' : 'on-amber') : 'off';
         return `
-          <div onclick="toggleLoad('${key}', this, event)" class="touch-pad flex flex-col items-center justify-center py-2.5 px-1.5">
-            <div class="led-pill ${pillState} mb-2"></div>
-            <span class="text-[10px] font-semibold tracking-tight text-center leading-tight ${labelColor}">${item.label}</span>
-            ${item.tag ? `<span class="mt-1 px-1.5 py-0.2 rounded text-[8px] font-bold tracking-wider ${subTagColor}">${item.tag}</span>` : ''}
+          <div onclick="toggleLoad('${key}', this, event)" class="touch-pad flex flex-col items-center justify-start pt-2.5 pb-2 px-1">
+            <div class="led-pill ${pillState} mb-2 shrink-0"></div>
+            <span class="text-[9.5px] font-semibold tracking-tight text-center whitespace-nowrap leading-none ${labelColor}">${displayLabel}</span>
+            <div class="h-4 mt-1 flex items-center justify-center">
+              ${displayTag ? `<span class="px-1.5 py-0.5 rounded text-[7.5px] font-bold tracking-wider whitespace-nowrap leading-none ${subTagColor}">${displayTag}</span>` : ''}
+            </div>
           </div>
         `;
       }).join('');
@@ -848,10 +998,11 @@
         return `<span class="w-1.5 h-3.5 rounded-full transition-all ${barColor}"></span>`;
       }).join('');
 
+      /* Static Laser-Etched Fan Icon on Glass Touch Panel (Does NOT Rotate) */
       const fanHtml = hasFan ? `
         <div class="flex items-center justify-center gap-3 pl-3 border-l ${isWhite ? 'border-slate-300/80' : 'border-white/10'}">
           <div class="flex flex-col items-center gap-1.5">
-            <svg viewBox="0 0 24 24" class="w-6 h-6 ${appState.fanSpeed > 0 ? 'fan-' + appState.fanSpeed : ''}" fill="${appState.fanSpeed > 0 ? (isWhite ? '#d97706' : '#fcd34d') : iconStroke}">
+            <svg viewBox="0 0 24 24" class="w-6 h-6 transition-colors duration-200" fill="${appState.fanSpeed > 0 ? (isWhite ? '#d97706' : '#fcd34d') : iconStroke}">
               <path d="M12 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-1.5-2.2C9.4 6.7 10.4 3 12.5 3c1.9 0 2.3 2.5.8 4.6-.5.7-.9 1.3-1.1 1.8-.6-.3-1.2-.5-1.7-.6zm4.7 1.7c2.1-1.1 5.8-.1 5.8 2 0 1.9-2.5 2.3-4.6.8-.7-.5-1.3-.9-1.8-1.1.3-.6.5-1.2.6-1.7zm-1.7 4.7c1.1 2.1.1 5.8-2 5.8-1.9 0-2.3-2.5-.8-4.6.5-.7.9-1.3 1.1-1.8.6.3 1.2.5 1.7.6zm-4.7-1.7c-2.1 1.1-5.8.1-5.8-2 0-1.9 2.5-2.3 4.6-.8.7.5 1.3.9 1.8 1.1-.3.6-.5 1.2-.6 1.7z"/>
             </svg>
             <span class="text-[9px] font-bold uppercase tracking-wider ${labelColor}">Fan ${appState.fanSpeed > 0 ? appState.fanSpeed : 'Off'}</span>
@@ -875,21 +1026,36 @@
       ` : '';
 
       const socketsHtml = socketCount > 0 ? `
-        <div class="flex items-center justify-center gap-3 pl-3 border-l ${isWhite ? 'border-slate-300/80' : 'border-white/10'}">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pl-3.5 border-l ${isWhite ? 'border-slate-300/80' : 'border-white/10'}">
           ${Array.from({ length: socketCount }).map((_, idx) => {
-            const sKey = idx === 0 ? 'socket1' : 'socket2';
-            const sActive = appState.loads[sKey];
-            const ringColor = sActive ? 'ring-2 ring-amber-400/80' : '';
+            const frameStyle = isWhite
+              ? 'bg-gradient-to-br from-slate-100 to-slate-200 border-2 border-slate-300/95 shadow-inner'
+              : 'bg-gradient-to-br from-white/[0.06] to-black/65 border-2 border-white/15 shadow-inner';
+            const slotFill = isWhite ? '#1e293b' : '#06070a';
+            const slotStroke = isWhite ? '#94a3b8' : '#3f4451';
+            const brassPin = '#b48a3e';
             return `
-              <div onclick="toggleLoad('${sKey}', this, event)" class="touch-pad flex flex-col items-center gap-1.5 p-2">
-                <div class="w-11 h-11 rounded-full flex flex-col items-center justify-center gap-1.5 ${isWhite ? 'bg-slate-200/90 border border-slate-300' : 'bg-black/50 border border-white/15'} ${ringColor}">
-                  <span class="w-2 h-2 rounded-full bg-neutral-950 border border-white/25"></span>
-                  <div class="flex items-center gap-2.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-950 border border-white/25"></span>
-                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-950 border border-white/25"></span>
-                  </div>
+              <div class="flex flex-col items-center gap-1.5 p-1 select-none" title="Universal Multi-Pin AC Socket (Non-Touch)">
+                <div class="w-16 h-16 sm:w-[74px] sm:h-[74px] rounded-2xl flex items-center justify-center ${frameStyle}">
+                  <svg viewBox="0 0 64 64" class="w-14 h-14 sm:w-16 sm:h-16" aria-hidden="true">
+                    <!-- Recessed Square Socket Well -->
+                    <rect x="3" y="3" width="58" height="58" rx="8" fill="none" stroke="${slotStroke}" stroke-width="1.3" opacity="0.7" />
+                    
+                    <!-- Top-Left & Top-Right Euro / 2-Pin Rounded Slots -->
+                    <path d="M17 13 h4.5 a3 3 0 0 1 3 3 v4.5 a3 3 0 0 1 -3 3 h-4.5 a2 2 0 0 1 -2 -2 v-6.5 a2 2 0 0 1 2 -2 z" fill="${slotFill}" stroke="${slotStroke}" stroke-width="1" />
+                    <path d="M42.5 13 h4.5 a2 2 0 0 1 2 2 v6.5 a2 2 0 0 1 -2 2 h-4.5 a3 3 0 0 1 -3 -3 v-4.5 a3 3 0 0 1 3 -3 z" fill="${slotFill}" stroke="${slotStroke}" stroke-width="1" />
+                    
+                    <!-- Center Multi-Standard Earth & Shutter Slot with Brass Contact -->
+                    <rect x="28" y="24" width="8" height="15" rx="4" fill="${slotFill}" stroke="${slotStroke}" stroke-width="1" />
+                    <circle cx="32" cy="30.5" r="2.2" fill="${brassPin}" />
+                    <rect x="30.7" y="31.5" width="2.6" height="5.5" rx="1" fill="${brassPin}" />
+
+                    <!-- Bottom-Left & Bottom-Right Universal Angled / Rectangular Slots -->
+                    <path d="M13 43 h10 v4.5 h2.5 v4.5 h-12.5 z" fill="${slotFill}" stroke="${slotStroke}" stroke-width="1" />
+                    <path d="M41 43 h10 v9 h-12.5 v-4.5 h2.5 z" fill="${slotFill}" stroke="${slotStroke}" stroke-width="1" />
+                  </svg>
                 </div>
-                <span class="text-[9px] font-semibold ${labelColor}">Socket ${idx + 1}</span>
+                <span class="text-[9px] font-semibold tracking-wide ${labelColor}">Socket ${idx + 1}</span>
               </div>
             `;
           }).join('')}
@@ -950,6 +1116,32 @@
         if (appState.fanSpeed > 0) rotor.classList.add(`fan-${appState.fanSpeed}`);
       }
 
+      // Home Exterior Villa Facade Lighting & Gate Sync
+      const extCove = document.getElementById('svg-ext-cove');
+      if (extCove) extCove.setAttribute('stroke', L.cove ? '#fde68a' : '#374151');
+
+      const extPorch = document.getElementById('svg-ext-porch');
+      if (extPorch) extPorch.setAttribute('fill', L.chandelier ? '#fde047' : '#4b5563');
+
+      ['svg-ext-win-1', 'svg-ext-win-2', 'svg-ext-win-3'].forEach(id => {
+        const w = document.getElementById(id);
+        if (w) w.setAttribute('fill', (L.chandelier || L.ambient) ? 'rgba(253, 224, 71, 0.34)' : 'rgba(251, 191, 36, 0.04)');
+      });
+
+      ['svg-ext-washer-1', 'svg-ext-washer-2'].forEach(id => {
+        const pw = document.getElementById(id);
+        if (pw) pw.setAttribute('fill', L.washers ? 'rgba(254, 243, 199, 0.32)' : 'rgba(254, 243, 199, 0.02)');
+      });
+
+      const extStrip = document.getElementById('svg-ext-strip');
+      if (extStrip) extStrip.setAttribute('stroke', L.strip ? '#38bdf8' : '#1e293b');
+
+      const extLamp = document.getElementById('svg-ext-lamp');
+      if (extLamp) extLamp.setAttribute('fill', L.lamp ? '#fbbf24' : '#4b5563');
+
+      const extGate = document.getElementById('svg-ext-gate');
+      if (extGate) extGate.style.transform = L.curtain ? 'translateX(0px)' : 'translateX(195px)';
+
       const activeLightCount = ['cove', 'chandelier', 'washers', 'lamp', 'strip', 'ambient'].filter(k => L[k]).length;
       const floorSheen = document.getElementById('svg-floor-sheen');
       if (floorSheen) {
@@ -963,9 +1155,129 @@
       document.getElementById('hudWattage').textContent = `${totalWatts}W`;
     }
 
+    // ======================================================================
+    // FIRST-TIME VISITOR INTERACTIVE GUIDED TOUR ENGINE
+    // ======================================================================
+    const TOUR_STEPS = [
+      {
+        targetId: 'tour-step-rooms',
+        title: '1. Choose Any Space or Home Exterior',
+        desc: 'Switch between the Home Exterior villa facade, Luxury Living Room, Master Suite, and Executive Office to see live lighting and gate automation in different environments.',
+        onEnter: () => selectRoom('living')
+      },
+      {
+        targetId: 'panelWallStage',
+        title: '2. Tap the Magnetic+ Glass Touch Switches',
+        desc: 'Tap any vertical LED pill on the 3mm toughened glass panel to toggle Cove LEDs, Chandeliers, Floor Lamps, 25A Heavy-Duty AC, or adjust the 4-step Fan Speed.',
+        onEnter: () => {}
+      },
+      {
+        targetId: 'tour-step-viewport',
+        title: '3. Watch Live Room Response & Power Load',
+        desc: 'Every switch you tap updates the room lighting, ceiling fan rotation, motorized curtains, and live wattage meter at the top right in real time.',
+        onEnter: () => {}
+      },
+      {
+        targetId: 'tour-step-finish',
+        title: '4. Customize Glass Finish & Module Size',
+        desc: 'Preview Black, Metallic Grey, or White glass finishes against matching architectural walls, and switch between 2M, 4M, 6M, and 12M panel configurations.',
+        onEnter: () => {}
+      },
+      {
+        targetId: 'tour-step-scenes',
+        title: '5. Trigger One-Touch Smart Mood Scenes',
+        desc: 'Try Welcome Home, Dinner Party, Cinema Night, or All Off to orchestrate multiple lights, curtains, and climate settings with a single tap.',
+        onEnter: () => {}
+      }
+    ];
+
+    let currentTourStepIndex = 0;
+
+    function clearTourHighlights() {
+      document.querySelectorAll('.tour-highlight-target').forEach(el => {
+        el.classList.remove('tour-highlight-target');
+      });
+    }
+
+    function renderTourStep() {
+      const step = TOUR_STEPS[currentTourStepIndex];
+      if (!step) return;
+
+      clearTourHighlights();
+      if (typeof step.onEnter === 'function') {
+        step.onEnter();
+      }
+
+      const targetEl = document.getElementById(step.targetId);
+      if (targetEl) {
+        targetEl.classList.add('tour-highlight-target');
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      document.getElementById('tourStepCounter').textContent = `Step ${currentTourStepIndex + 1} of ${TOUR_STEPS.length}`;
+      document.getElementById('tourStepTitle').textContent = step.title;
+      document.getElementById('tourStepDesc').textContent = step.desc;
+
+      const prevBtn = document.getElementById('tourPrevBtn');
+      const nextBtn = document.getElementById('tourNextBtn');
+      prevBtn.style.visibility = currentTourStepIndex === 0 ? 'hidden' : 'visible';
+      nextBtn.textContent = currentTourStepIndex === TOUR_STEPS.length - 1 ? 'Finish Tour ✓' : 'Next Step →';
+
+      const dotsHtml = TOUR_STEPS.map((_, idx) => {
+        const isCurrent = idx === currentTourStepIndex;
+        return `<span class="h-1.5 rounded-full transition-all ${isCurrent ? 'w-5 bg-amber-400' : 'w-1.5 bg-white/25'}"></span>`;
+      }).join('');
+      document.getElementById('tourDotsContainer').innerHTML = dotsHtml;
+    }
+
+    function startGuidedTour(manualRestart = false) {
+      currentTourStepIndex = 0;
+      document.getElementById('guidedTourBackdrop').classList.remove('hidden');
+      document.getElementById('guidedTourCard').classList.remove('hidden');
+      if (manualRestart) playCapacitiveClick(true);
+      renderTourStep();
+    }
+
+    function nextTourStep() {
+      playCapacitiveClick(true);
+      if (currentTourStepIndex < TOUR_STEPS.length - 1) {
+        currentTourStepIndex++;
+        renderTourStep();
+      } else {
+        endGuidedTour();
+      }
+    }
+
+    function prevTourStep() {
+      playCapacitiveClick(false);
+      if (currentTourStepIndex > 0) {
+        currentTourStepIndex--;
+        renderTourStep();
+      }
+    }
+
+    function endGuidedTour() {
+      clearTourHighlights();
+      document.getElementById('guidedTourBackdrop').classList.add('hidden');
+      document.getElementById('guidedTourCard').classList.add('hidden');
+      try {
+        localStorage.setItem('aplus_virtual_tour_seen_v1', 'true');
+      } catch (e) {}
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       renderTouchPlate();
       syncRoomLighting();
+
+      // Automatically launch the guided tour for first-time visitors
+      let hasSeenTour = false;
+      try {
+        hasSeenTour = localStorage.getItem('aplus_virtual_tour_seen_v1') === 'true';
+      } catch (e) {}
+
+      if (!hasSeenTour) {
+        setTimeout(() => startGuidedTour(false), 650);
+      }
     });
   </script>
 </body>
