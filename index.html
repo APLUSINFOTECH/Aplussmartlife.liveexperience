@@ -813,16 +813,16 @@
     };
 
     const fixtureMap = {
-      cove: { label: 'Cove LED', watts: 48, color: 'amber', tag: '' },
-      chandelier: { label: 'Chandelier', watts: 96, color: 'amber', tag: '' },
-      washers: { label: 'Wall Wash', watts: 36, color: 'amber', tag: '' },
-      lamp: { label: 'Floor Lamp', watts: 28, color: 'amber', tag: '' },
-      strip: { label: 'Accent Strip', watts: 24, color: 'cyan', tag: '' },
-      ambient: { label: 'TV Glow', watts: 18, color: 'cyan', tag: '' },
-      ac: { label: 'Split AC', watts: 1450, color: 'cyan', tag: '25A HD' },
-      curtain: { label: 'Curtains', watts: 35, color: 'amber', tag: '2-WAY' },
-      socket1: { label: 'Socket 1', watts: 60, color: 'amber', tag: '10A' },
-      socket2: { label: 'Socket 2', watts: 60, color: 'amber', tag: '10A' }
+      cove: { label: 'Cove LED', watts: 48, color: 'amber' },
+      chandelier: { label: 'Chandelier', watts: 96, color: 'amber' },
+      washers: { label: 'Wall Wash', watts: 36, color: 'amber' },
+      lamp: { label: 'Floor Lamp', watts: 28, color: 'amber' },
+      strip: { label: 'Accent Strip', watts: 24, color: 'cyan' },
+      ambient: { label: 'TV Glow', watts: 18, color: 'cyan' },
+      ac: { label: 'Split AC', watts: 1450, color: 'cyan' },
+      curtain: { label: 'Curtains', watts: 35, color: 'amber' },
+      socket1: { label: 'Socket 1', watts: 60, color: 'amber' },
+      socket2: { label: 'Socket 2', watts: 60, color: 'amber' }
     };
 
     const roomTitles = {
@@ -1021,7 +1021,6 @@
       const container = document.getElementById('touchPlateContent');
       const isWhite = appState.finish === 'white';
       const labelColor = isWhite ? 'text-slate-700' : 'text-gray-200/90';
-      const subTagColor = isWhite ? 'text-amber-700 bg-amber-500/15' : 'text-amber-300/90 bg-amber-400/10';
       const iconStroke = isWhite ? '#334155' : '#e5e7eb';
 
       let switchKeys = [];
@@ -1058,17 +1057,16 @@
       const switchesHtml = switchKeys.map(key => {
         const isExt = appState.room === 'exterior';
         const extNames = {
-          cove: { label: 'Facade Cove', tag: '' },
-          chandelier: { label: 'Porch Light', tag: '' },
-          washers: { label: 'Pillar Wash', tag: '' },
-          lamp: { label: 'Garden Lamp', tag: '' },
-          strip: { label: 'Driveway LED', tag: '' },
-          ambient: { label: 'Window Glow', tag: '' },
-          curtain: { label: 'Main Gate', tag: 'MOTOR' }
+          cove: { label: 'Facade Cove' },
+          chandelier: { label: 'Porch Light' },
+          washers: { label: 'Pillar Wash' },
+          lamp: { label: 'Garden Lamp' },
+          strip: { label: 'Driveway LED' },
+          ambient: { label: 'Window Glow' },
+          curtain: { label: 'Main Gate' }
         };
         const item = fixtureMap[key];
         const displayLabel = (isExt && extNames[key]) ? extNames[key].label : item.label;
-        const displayTag = (isExt && extNames[key]) ? extNames[key].tag : item.tag;
         const isOn = appState.loads[key];
         const pillState = isOn ? (item.color === 'cyan' ? 'on-cyan' : 'on-amber') : 'off';
 
@@ -1083,12 +1081,9 @@
         const labelSizeClass = appState.model === 'no14' ? 'text-[8.5px]' : 'text-[9.5px]';
 
         return `
-          <div onclick="toggleLoad('${key}', this, event)" class="touch-pad flex flex-col items-center justify-start pt-2.5 pb-2 px-1 overflow-hidden">
+          <div onclick="toggleLoad('${key}', this, event)" class="touch-pad flex flex-col items-center justify-center py-3 px-1 overflow-hidden">
             <div class="led-pill ${pillState} mb-2 shrink-0" style="${customLedStyle}"></div>
             <span class="${labelSizeClass} font-semibold tracking-tight text-center truncate w-full leading-none ${labelColor}" title="${displayLabel}">${displayLabel}</span>
-            <div class="h-4 mt-1 flex items-center justify-center">
-              ${displayTag ? `<span class="px-1.5 py-0.5 rounded text-[7px] font-bold tracking-wider whitespace-nowrap leading-none ${subTagColor}">${displayTag}</span>` : ''}
-            </div>
           </div>
         `;
       }).join('');
