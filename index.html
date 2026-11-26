@@ -252,7 +252,7 @@
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
           </span>
-          <span class="hidden sm:inline">LIVE VIRTUAL SHOWROOM</span>
+          <span class="hidden sm:inline">LIVE VIRTUAL SHOWROOM • 230V AC VOICE READY</span>
           <span class="sm:hidden">LIVE SHOWROOM</span>
         </div>
       </div>
@@ -642,12 +642,15 @@
       </div>
 
       <!-- Compact Brochure Spec Strip -->
-      <div class="glass-card rounded-2xl px-4 py-3 text-center">
+      <div class="glass-card rounded-2xl px-4 py-3.5 text-center flex flex-col gap-2">
         <p class="text-[11px] font-medium tracking-wide text-gray-300">
           3mm Toughened Glass <span class="text-amber-400 mx-1">•</span>
-          1 Lakh+ Touch Life <span class="text-amber-400 mx-1">•</span>
+      
           25A Heavy Duty Relay <span class="text-amber-400 mx-1">•</span>
           Voice &amp; OTA Ready
+        </p>
+        <p class="text-xs sm:text-sm text-amber-300 font-medium leading-relaxed pt-2 border-t border-white/10">
+          <span class="font-bold text-amber-300">Note:</span> For motorized control can be modified according to brand/user requirement. <span class="text-gray-200">(e.g. Curtain Motors, Gate Motors)</span>
         </p>
       </div>
     </aside>
@@ -1005,7 +1008,7 @@
             <svg viewBox="0 0 24 24" class="w-6 h-6 transition-colors duration-200" fill="${appState.fanSpeed > 0 ? (isWhite ? '#d97706' : '#fcd34d') : iconStroke}">
               <path d="M12 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-1.5-2.2C9.4 6.7 10.4 3 12.5 3c1.9 0 2.3 2.5.8 4.6-.5.7-.9 1.3-1.1 1.8-.6-.3-1.2-.5-1.7-.6zm4.7 1.7c2.1-1.1 5.8-.1 5.8 2 0 1.9-2.5 2.3-4.6.8-.7-.5-1.3-.9-1.8-1.1.3-.6.5-1.2.6-1.7zm-1.7 4.7c1.1 2.1.1 5.8-2 5.8-1.9 0-2.3-2.5-.8-4.6.5-.7.9-1.3 1.1-1.8.6.3 1.2.5 1.7.6zm-4.7-1.7c-2.1 1.1-5.8.1-5.8-2 0-1.9 2.5-2.3 4.6-.8.7.5 1.3.9 1.8 1.1-.3.6-.5 1.2-.6 1.7z"/>
             </svg>
-            <span class="text-[9px] font-bold uppercase tracking-wider ${labelColor}">Fan ${appState.fanSpeed > 0 ? appState.fanSpeed : 'Off'}</span>
+            <span class="text-[9.5px] font-semibold tracking-tight leading-none ${labelColor}">Fan</span>
           </div>
 
           <div class="flex flex-col items-center gap-2">
