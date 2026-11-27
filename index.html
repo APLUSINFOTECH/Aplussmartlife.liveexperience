@@ -217,12 +217,12 @@
   <!-- ======================================================================
        1. HEADER & BRANDING
        ====================================================================== -->
-  <header class="sticky top-0 z-40 glass-card border-b border-white/10 px-4 sm:px-6 lg:px-8 py-3">
-    <div class="max-w-[1400px] mx-auto flex items-center justify-between gap-4">
+  <header class="sticky top-0 z-40 glass-card border-b border-white/10 px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3">
+    <div class="max-w-[1400px] mx-auto flex flex-nowrap items-center justify-between gap-2 sm:gap-4">
       
       <!-- Brand Logo Emblem + Title -->
-      <div class="flex items-center gap-3.5">
-        <div class="bg-white rounded-xl p-1.5 shadow-md shadow-black/40 w-11 h-11 flex items-center justify-center shrink-0">
+      <div class="flex items-center gap-2.5 sm:gap-3.5 min-w-0 shrink">
+        <div class="bg-white rounded-xl p-1 sm:p-1.5 shadow-md shadow-black/40 w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center shrink-0">
           <svg viewBox="0 0 120 110" class="w-full h-full" aria-label="A Plus Smart Life Logo">
             <!-- Green Swoosh -->
             <path d="M12 88 C 24 44, 62 16, 108 6 C 74 24, 42 50, 12 88 Z" fill="#8cc63f"/>
@@ -238,34 +238,34 @@
             <text x="60" y="106" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="8.5" letter-spacing="1.8" fill="#132d54">SMART LIFE</text>
           </svg>
         </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="font-serif-luxury text-lg sm:text-xl font-bold tracking-wide text-white leading-none">
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5 sm:gap-2">
+            <h1 class="font-serif-luxury text-base sm:text-xl font-bold tracking-wide text-white leading-none truncate">
               A Plus Smart Life
             </h1>
             <span class="hidden md:inline-block px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-400/30">
               Magnetic+
             </span>
           </div>
-          <p class="text-[11px] text-gray-400 mt-0.5">Virtual Experience Center • 3mm Glass Touch</p>
+          <p class="text-[10px] sm:text-[11px] text-gray-400 mt-0.5 truncate">Virtual Experience Center • 3mm Glass Touch</p>
         </div>
       </div>
 
       <!-- Right Status Pill + Replay Guided Tour Button -->
-      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
         <button type="button" onclick="startGuidedTour(true)" id="headerTourBtn"
-          class="px-3 sm:px-3.5 py-2 rounded-full text-[11px] sm:text-xs font-bold bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400/50 text-amber-300 flex items-center gap-1.5 transition cursor-pointer shadow-sm">
+          class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-bold bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400/50 text-amber-300 flex items-center gap-1 sm:gap-1.5 transition cursor-pointer shadow-sm whitespace-nowrap">
           <span>🧭</span>
-          <span>Guided Tour</span>
+          <span>Tour</span>
         </button>
 
-        <div class="px-3.5 sm:px-4 py-2 rounded-full text-[11px] sm:text-xs font-semibold tracking-wide bg-white/[0.04] border border-white/15 text-gray-200 flex items-center gap-2.5 shadow-inner">
-          <span class="relative flex h-2.5 w-2.5">
+        <div class="px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide bg-white/[0.04] border border-white/15 text-gray-200 flex items-center gap-1.5 sm:gap-2.5 shadow-inner whitespace-nowrap">
+          <span class="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 bg-emerald-400"></span>
           </span>
-          <span class="hidden sm:inline">LIVE VIRTUAL SHOWROOM • 230V AC VOICE READY</span>
-          <span class="sm:hidden">LIVE SHOWROOM</span>
+          <span class="hidden sm:inline">LIVE VIRTUAL SHOWROOM </span>
+          <span class="sm:hidden">LIVE</span>
         </div>
       </div>
     </div>
@@ -274,33 +274,33 @@
   <!-- ======================================================================
        MAIN EXPERIENCE STAGE (7 COLS LEFT VISUALIZER / 5 COLS RIGHT PANEL)
        ====================================================================== -->
-  <main class="flex-1 max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+  <main class="flex-1 max-w-[1400px] w-full mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-6 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-start">
 
     <!-- LEFT COLUMN (7 COLS): ROOM SELECTOR + ARCHITECTURAL VISUALIZER + SCENES -->
-    <section class="lg:col-span-7 flex flex-col gap-4">
+    <section class="lg:col-span-7 flex flex-col gap-3.5 sm:gap-4">
 
-      <!-- Room Selector Pill Tabs -->
-      <div id="tour-step-rooms" class="flex flex-wrap items-center justify-between gap-2 p-1 rounded-2xl">
-        <div class="inline-flex flex-wrap items-center p-1 rounded-2xl glass-card gap-1" role="tablist">
+      <!-- Room Selector Pill Tabs (Horizontally Scrollable on Mobile) -->
+      <div id="tour-step-rooms" class="flex items-center justify-between gap-2">
+        <div class="w-full sm:w-auto flex items-center overflow-x-auto p-1 rounded-2xl glass-card gap-1 no-scrollbar" role="tablist">
           <button onclick="selectRoom('exterior')" id="room-tab-exterior"
-            class="px-3.5 py-1.5 rounded-xl text-xs font-medium transition text-gray-400 hover:text-white border border-transparent">
+            class="shrink-0 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-medium transition text-gray-400 hover:text-white border border-transparent">
             Home Exterior
           </button>
           <button onclick="selectRoom('living')" id="room-tab-living"
-            class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition bg-amber-500/20 text-amber-300 border border-amber-400/40">
+            class="shrink-0 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-semibold transition bg-amber-500/20 text-amber-300 border border-amber-400/40">
             Luxury Living Room
           </button>
           <button onclick="selectRoom('bedroom')" id="room-tab-bedroom"
-            class="px-3.5 py-1.5 rounded-xl text-xs font-medium transition text-gray-400 hover:text-white border border-transparent">
+            class="shrink-0 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-medium transition text-gray-400 hover:text-white border border-transparent">
             Master Suite
           </button>
           <button onclick="selectRoom('office')" id="room-tab-office"
-            class="px-3.5 py-1.5 rounded-xl text-xs font-medium transition text-gray-400 hover:text-white border border-transparent">
+            class="shrink-0 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-medium transition text-gray-400 hover:text-white border border-transparent">
             Executive Office
           </button>
         </div>
 
-        <span class="hidden sm:inline-block text-xs text-gray-400">
+        <span class="hidden xl:inline-block text-xs text-gray-400">
           Tap switches on the right to control lighting live
         </span>
       </div>
@@ -534,23 +534,23 @@
         </svg>
 
         <!-- Floating HUD Status Overlay -->
-        <div class="absolute top-3.5 left-3.5 right-3.5 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
-          <span id="hudRoomTitle" class="px-3 py-1 rounded-full text-[11px] font-semibold bg-black/65 backdrop-blur-md text-white border border-white/15">
+        <div class="absolute top-2.5 left-2.5 right-2.5 sm:top-3.5 sm:left-3.5 sm:right-3.5 flex items-center justify-between gap-1.5 pointer-events-none">
+          <span id="hudRoomTitle" class="px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-semibold bg-black/65 backdrop-blur-md text-white border border-white/15 truncate max-w-[52%]">
             Luxury Living Room
           </span>
-          <div class="flex items-center gap-2">
-            <span id="hudActiveLoads" class="px-3 py-1 rounded-full text-[11px] font-medium bg-black/65 backdrop-blur-md text-emerald-300 border border-white/15">
+          <div class="flex items-center gap-1.5 shrink-0">
+            <span id="hudActiveLoads" class="px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-medium bg-black/65 backdrop-blur-md text-emerald-300 border border-white/15 whitespace-nowrap">
               3 Active Loads
             </span>
-            <span id="hudWattage" class="px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-black/65 backdrop-blur-md text-amber-300 border border-white/15">
+            <span id="hudWattage" class="px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-semibold bg-black/65 backdrop-blur-md text-amber-300 border border-white/15 whitespace-nowrap">
               124W
             </span>
           </div>
         </div>
       </div>
 
-      <!-- 3. PROMINENT SMART MOOD SCENES SHOWCASE -->
-      <div id="tour-step-scenes" class="glass-card rounded-3xl p-5 sm:p-6 border border-white/15 shadow-2xl shadow-black/40 flex flex-col gap-4 relative overflow-hidden">
+      <!-- 3. PROMINENT SMART MOOD SCENES SHOWCASE (Desktop Order Below Viewport, Mobile Order After Touch Panel) -->
+      <div id="tour-step-scenes" class="hidden lg:flex glass-card rounded-3xl p-5 sm:p-6 border border-white/15 shadow-2xl shadow-black/40 flex-col gap-4 relative overflow-hidden">
         <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent pointer-events-none"></div>
 
         <div class="flex flex-wrap items-center justify-between gap-2">
@@ -601,29 +601,103 @@
     </section>
 
     <!-- RIGHT COLUMN (5 COLS): INTERACTIVE MAGNETIC+ GLASS TOUCH PANEL SIMULATOR -->
-    <aside class="lg:col-span-5 flex flex-col gap-4">
+    <aside class="lg:col-span-5 flex flex-col gap-3.5 sm:gap-4">
+
+      <!-- Wall-Mounted Magnetic+ Glass Touch Panel (Order 1 on Mobile so it sits directly beneath the Room Screen!) -->
+      <div id="panelWallStage" class="order-1 lg:order-2 wall-walnut relative rounded-3xl p-3.5 sm:p-7 flex flex-col items-center justify-center min-h-[245px] sm:min-h-[300px] border border-white/15 shadow-2xl transition-all duration-500">
+        
+        <div id="magneticPlate" class="magnetic-plate plate-black w-full max-w-[490px] px-3.5 py-4 sm:px-6 sm:py-6">
+          <div id="touchPlateContent" class="relative z-10"></div>
+        </div>
+
+        <div class="mt-3.5 sm:mt-4 flex flex-wrap items-center justify-center gap-2">
+          <button type="button" onclick="openRgbLedModal()" id="rgbCustomizerTriggerBtn"
+            class="text-[11px] font-semibold text-white bg-gradient-to-r from-emerald-500/25 via-sky-500/25 to-amber-500/25 hover:from-emerald-500/35 hover:to-amber-500/35 backdrop-blur-md px-3 sm:px-3.5 py-1.5 rounded-full border border-white/25 flex items-center gap-2 transition cursor-pointer shadow-md">
+            <span id="rgbStatusDotBadge" class="w-2.5 h-2.5 rounded-full bg-[#22ff00] shadow-[0_0_8px_#22ff00]"></span>
+            <span>🎨 LED Color</span>
+          </button>
+          <button onclick="toggleSound()" id="soundToggleBtn"
+            class="text-[11px] text-amber-300 bg-black/55 hover:bg-black/75 backdrop-blur-md px-3 py-1.5 rounded-full border border-amber-400/30 transition cursor-pointer">
+            🔊 Chime: ON
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Smart Mood Scenes (Visible on Mobile/Tablet directly below the Touch Panel) -->
+      <div class="order-2 lg:hidden glass-card rounded-3xl p-4 border border-white/15 shadow-xl flex flex-col gap-3">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24]"></span>
+            <h2 class="text-xs font-bold tracking-[0.14em] uppercase text-white">Smart Mood Scenes</h2>
+          </div>
+          <span class="text-[10px] text-gray-400">One-Touch Presets</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <button onclick="applyScene('welcome')" id="mob-scene-btn-welcome"
+            class="flex items-center gap-2.5 text-left p-3 rounded-2xl transition bg-amber-500/20 text-amber-200 border border-amber-400/60">
+            <span class="text-xl leading-none">✨</span>
+            <div>
+              <span class="text-xs font-bold text-white block leading-tight">Welcome Home</span>
+              <span class="text-[10px] text-amber-200/80 block">Warm Cove</span>
+            </div>
+          </button>
+
+          <button onclick="applyScene('dinner')" id="mob-scene-btn-dinner"
+            class="flex items-center gap-2.5 text-left p-3 rounded-2xl transition bg-white/[0.04] text-gray-200 border border-white/10">
+            <span class="text-xl leading-none">🥂</span>
+            <div>
+              <span class="text-xs font-bold text-white block leading-tight">Dinner Party</span>
+              <span class="text-[10px] text-gray-400 block">Chandelier &amp; AC</span>
+            </div>
+          </button>
+
+          <button onclick="applyScene('cinema')" id="mob-scene-btn-cinema"
+            class="flex items-center gap-2.5 text-left p-3 rounded-2xl transition bg-white/[0.04] text-gray-200 border border-white/10">
+            <span class="text-xl leading-none">🎬</span>
+            <div>
+              <span class="text-xs font-bold text-white block leading-tight">Cinema Night</span>
+              <span class="text-[10px] text-gray-400 block">Cyan &amp; Strip</span>
+            </div>
+          </button>
+
+          <button onclick="applyScene('alloff')" id="mob-scene-btn-alloff"
+            class="flex items-center gap-2.5 text-left p-3 rounded-2xl transition bg-white/[0.04] text-gray-200 border border-white/10">
+            <span class="text-rose-400 shrink-0">
+              <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                <line x1="12" y1="2" x2="12" y2="12"></line>
+              </svg>
+            </span>
+            <div>
+              <span class="text-xs font-bold text-white block leading-tight">All Off</span>
+              <span class="text-[10px] text-gray-400 block">Master Off</span>
+            </div>
+          </button>
+        </div>
+      </div>
 
       <!-- Finish Switcher & Brochure Model Selector -->
-      <div id="tour-step-finish" class="glass-card rounded-2xl p-4 flex flex-col gap-3">
+      <div id="tour-step-finish" class="order-3 lg:order-1 glass-card rounded-2xl p-3.5 sm:p-4 flex flex-col gap-3">
         <div class="flex items-center justify-between">
           <span class="text-xs font-semibold uppercase tracking-wider text-gray-300">Panel Glass Finish</span>
           <span class="text-[11px] text-amber-300/90 font-medium">3mm Toughened Glass</span>
         </div>
 
-        <div class="grid grid-cols-3 gap-2">
+        <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
           <button onclick="setPanelFinish('black')" id="fin-btn-black"
-            class="flex items-center justify-center gap-2 py-2 px-2.5 rounded-xl text-xs font-semibold bg-white/15 border border-amber-400/60 text-white transition">
-            <span class="w-3 h-3 rounded-full bg-[#0d0f14] border border-white/40"></span>
+            class="flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2 rounded-xl text-[11px] sm:text-xs font-semibold bg-white/15 border border-amber-400/60 text-white transition">
+            <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#0d0f14] border border-white/40 shrink-0"></span>
             <span>Black</span>
           </button>
           <button onclick="setPanelFinish('grey')" id="fin-btn-grey"
-            class="flex items-center justify-center gap-2 py-2 px-2.5 rounded-xl text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition">
-            <span class="w-3 h-3 rounded-full bg-[#636872] border border-white/40"></span>
-            <span>Metallic Grey</span>
+            class="flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2 rounded-xl text-[11px] sm:text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition">
+            <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#636872] border border-white/40 shrink-0"></span>
+            <span>Grey</span>
           </button>
           <button onclick="setPanelFinish('white')" id="fin-btn-white"
-            class="flex items-center justify-center gap-2 py-2 px-2.5 rounded-xl text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition">
-            <span class="w-3 h-3 rounded-full bg-[#f1f5f9] border border-gray-400"></span>
+            class="flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2 rounded-xl text-[11px] sm:text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition">
+            <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#f1f5f9] border border-gray-400 shrink-0"></span>
             <span>White</span>
           </button>
         </div>
@@ -640,28 +714,8 @@
         </div>
       </div>
 
-      <!-- Wall-Mounted Magnetic+ Glass Touch Panel -->
-      <div id="panelWallStage" class="wall-walnut relative rounded-3xl p-4 sm:p-7 flex flex-col items-center justify-center min-h-[300px] border border-white/15 shadow-2xl transition-all duration-500">
-        
-        <div id="magneticPlate" class="magnetic-plate plate-black w-full max-w-[490px] px-4 py-5 sm:px-6 sm:py-6">
-          <div id="touchPlateContent" class="relative z-10"></div>
-        </div>
-
-        <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
-          <button type="button" onclick="openRgbLedModal()" id="rgbCustomizerTriggerBtn"
-            class="text-[11px] font-semibold text-white bg-gradient-to-r from-emerald-500/25 via-sky-500/25 to-amber-500/25 hover:from-emerald-500/35 hover:to-amber-500/35 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/25 flex items-center gap-2 transition cursor-pointer shadow-md">
-            <span id="rgbStatusDotBadge" class="w-2.5 h-2.5 rounded-full bg-[#22ff00] shadow-[0_0_8px_#22ff00]"></span>
-            <span>🎨 Customize LED Color</span>
-          </button>
-          <button onclick="toggleSound()" id="soundToggleBtn"
-            class="text-[11px] text-amber-300 bg-black/55 hover:bg-black/75 backdrop-blur-md px-3 py-1.5 rounded-full border border-amber-400/30 transition cursor-pointer">
-            🔊 Chime: ON
-          </button>
-        </div>
-      </div>
-
       <!-- Compact Brochure Spec Strip -->
-      <div class="glass-card rounded-2xl px-4 py-3.5 text-center flex flex-col gap-2">
+      <div class="order-4 lg:order-3 glass-card rounded-2xl px-4 py-3.5 text-center flex flex-col gap-2">
         <p class="text-[11px] font-medium tracking-wide text-gray-300">
           3mm Toughened Glass <span class="text-amber-400 mx-1">•</span>
       
@@ -761,8 +815,8 @@
        ====================================================================== -->
   <div id="guidedTourBackdrop" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-[2px] transition-opacity duration-300"></div>
 
-  <div id="guidedTourCard" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[70] hidden w-[92%] max-w-lg rounded-3xl glass-card bg-[#10141f]/95 border border-amber-400/60 p-5 sm:p-6 shadow-2xl shadow-black/90">
-    <div class="flex items-center justify-between gap-2 mb-2.5">
+  <div id="guidedTourCard" class="fixed bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-[70] hidden w-[94%] sm:w-[92%] max-w-lg rounded-3xl glass-card bg-[#10141f]/95 border border-amber-400/60 p-4 sm:p-6 shadow-2xl shadow-black/90">
+    <div class="flex items-center justify-between gap-2 mb-2">
       <div class="flex items-center gap-2">
         <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/40" id="tourStepCounter">
           Step 1 of 5
@@ -987,10 +1041,19 @@
       };
       const defaultStyle = 'group flex flex-col items-start text-left p-4 sm:p-5 rounded-2xl transition-all duration-200 bg-white/[0.04] hover:bg-white/[0.09] text-gray-200 border border-white/10 hover:border-white/25';
 
+      const mobActiveStyles = {
+        welcome: 'flex items-center gap-2.5 text-left p-3 rounded-2xl transition bg-amber-500/20 text-amber-200 border border-amber-400/60',
+        dinner: 'flex items-center gap-2.5 text-left p-3 rounded-2xl transition bg-amber-500/20 text-amber-200 border border-amber-400/60',
+        cinema: 'flex items-center gap-2.5 text-left p-3 rounded-2xl transition bg-sky-500/20 text-sky-200 border border-sky-400/60',
+        alloff: 'flex items-center gap-2.5 text-left p-3 rounded-2xl transition bg-rose-500/20 text-rose-200 border border-rose-400/60'
+      };
+      const mobDefaultStyle = 'flex items-center gap-2.5 text-left p-3 rounded-2xl transition bg-white/[0.04] text-gray-200 border border-white/10';
+
       ['welcome', 'dinner', 'cinema', 'alloff'].forEach(s => {
         const btn = document.getElementById(`scene-btn-${s}`);
-        if (!btn) return;
-        btn.className = s === appState.scene ? activeStyles[s] : defaultStyle;
+        if (btn) btn.className = s === appState.scene ? activeStyles[s] : defaultStyle;
+        const mobBtn = document.getElementById(`mob-scene-btn-${s}`);
+        if (mobBtn) mobBtn.className = s === appState.scene ? mobActiveStyles[s] : mobDefaultStyle;
       });
     }
 
@@ -1017,8 +1080,8 @@
       ['black', 'grey', 'white'].forEach(f => {
         const btn = document.getElementById(`fin-btn-${f}`);
         btn.className = f === finish
-          ? 'flex items-center justify-center gap-2 py-2 px-2.5 rounded-xl text-xs font-semibold bg-white/15 border border-amber-400/60 text-white transition'
-          : 'flex items-center justify-center gap-2 py-2 px-2.5 rounded-xl text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition';
+          ? 'flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2 rounded-xl text-[11px] sm:text-xs font-semibold bg-white/15 border border-amber-400/60 text-white transition'
+          : 'flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2 rounded-xl text-[11px] sm:text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition';
       });
 
       renderTouchPlate();
@@ -1142,7 +1205,7 @@
       ` : '';
 
       const socketsHtml = socketCount > 0 ? `
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-2.5 pl-2.5 border-l ${isWhite ? 'border-slate-300/80' : 'border-white/10'} shrink-0">
+        <div class="flex flex-col items-center justify-center gap-1.5 sm:gap-2 pl-2 sm:pl-2.5 border-l ${isWhite ? 'border-slate-300/80' : 'border-white/10'} shrink-0">
           ${Array.from({ length: socketCount }).map((_, idx) => {
             const frameStyle = isWhite
               ? 'bg-gradient-to-br from-slate-100 to-slate-200 border-2 border-slate-300/95 shadow-inner'
@@ -1151,9 +1214,9 @@
             const slotStroke = isWhite ? '#94a3b8' : '#3f4451';
             const brassPin = '#b48a3e';
             return `
-              <div class="flex flex-col items-center gap-1 p-0.5 select-none" title="Universal Multi-Pin AC Socket (Non-Touch)">
-                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center ${frameStyle}">
-                  <svg viewBox="0 0 64 64" class="w-12 h-12 sm:w-14 sm:h-14" aria-hidden="true">
+              <div class="flex flex-col items-center gap-0.5 p-0.5 select-none" title="Universal Multi-Pin AC Socket (Non-Touch)">
+                <div class="w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center ${frameStyle}">
+                  <svg viewBox="0 0 64 64" class="w-9 h-9 sm:w-12 sm:h-12" aria-hidden="true">
                     <!-- Recessed Square Socket Well -->
                     <rect x="3" y="3" width="58" height="58" rx="8" fill="none" stroke="${slotStroke}" stroke-width="1.3" opacity="0.7" />
                     
@@ -1171,7 +1234,7 @@
                     <path d="M41 43 h10 v9 h-12.5 v-4.5 h2.5 z" fill="${slotFill}" stroke="${slotStroke}" stroke-width="1" />
                   </svg>
                 </div>
-                <span class="text-[9px] font-semibold tracking-wide ${labelColor}">Socket ${idx + 1}</span>
+                <span class="text-[8px] sm:text-[9px] font-semibold tracking-wide ${labelColor}">Socket ${idx + 1}</span>
               </div>
             `;
           }).join('')}
