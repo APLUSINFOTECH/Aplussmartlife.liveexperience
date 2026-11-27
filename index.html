@@ -240,6 +240,17 @@
         </div>
         <div>
           <div class="flex items-center gap-2">
+            <h1 class="font-serif-luxury text-lg sm:text-xl font-bold tracking-wide text-white leading-none">
+              A Plus Smart Life
+            </h1>
+            <span class="hidden md:inline-block px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-400/30">
+              Magnetic+
+            </span>
+          </div>
+          <p class="text-[11px] text-gray-400 mt-0.5">Virtual Experience Center • 3mm Glass Touch</p>
+        </div>
+      </div>
+
       <!-- Right Status Pill + Replay Guided Tour Button -->
       <div class="flex items-center gap-2 sm:gap-3 shrink-0">
         <button type="button" onclick="startGuidedTour(true)" id="headerTourBtn"
@@ -712,6 +723,8 @@
         <input type="range" id="rgbBrightnessSlider" min="15" max="100" value="100" oninput="onRgbBrightnessChange(this.value)"
           class="w-full h-3 rounded-full appearance-none cursor-pointer border border-white/15"
           style="background: linear-gradient(90deg, #090b10 0%, #22ff00 100%);" />
+      </div>
+
       <!-- Hex Code Readout Pill (Matches Mobile App UI - Editable) -->
       <div class="flex items-center justify-center gap-2">
         <div class="px-4 py-2 rounded-xl bg-[#1a1d24] border border-white/15 focus-within:border-amber-400 flex items-center gap-2.5 transition">
@@ -746,9 +759,9 @@
   <!-- ======================================================================
        FIRST-TIME USER INTERACTIVE GUIDED TOUR OVERLAY & FLOATING CARD
        ====================================================================== -->
-  <div id="guidedTourBackdrop" class="fixed inset-0 z-50 hidden bg-black/65 backdrop-blur-[2px] transition-opacity duration-300"></div>
+  <div id="guidedTourBackdrop" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-[2px] transition-opacity duration-300"></div>
 
-  <div id="guidedTourCard" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[70] hidden w-[92%] max-w-lg rounded-3xl glass-panel bg-[#10141f]/95 border border-amber-400/60 p-5 sm:p-6 shadow-2xl shadow-black/90">
+  <div id="guidedTourCard" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[70] hidden w-[92%] max-w-lg rounded-3xl glass-card bg-[#10141f]/95 border border-amber-400/60 p-5 sm:p-6 shadow-2xl shadow-black/90">
     <div class="flex items-center justify-between gap-2 mb-2.5">
       <div class="flex items-center gap-2">
         <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/40" id="tourStepCounter">
