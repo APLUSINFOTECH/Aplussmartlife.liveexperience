@@ -603,8 +603,45 @@
     <!-- RIGHT COLUMN (5 COLS): INTERACTIVE MAGNETIC+ GLASS TOUCH PANEL SIMULATOR -->
     <aside class="lg:col-span-5 flex flex-col gap-3.5 sm:gap-4">
 
-      <!-- Wall-Mounted Magnetic+ Glass Touch Panel (Order 1 on Mobile so it sits directly beneath the Room Screen!) -->
-      <div id="panelWallStage" class="order-1 lg:order-2 wall-walnut relative rounded-3xl p-3.5 sm:p-7 flex flex-col items-center justify-center min-h-[245px] sm:min-h-[300px] border border-white/15 shadow-2xl transition-all duration-500">
+      <!-- Finish Switcher & Brochure Model Selector (Above Panel on Both Mobile & Desktop) -->
+      <div id="tour-step-finish" class="glass-card rounded-2xl p-3.5 sm:p-4 flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wider text-gray-300">Panel Glass Finish</span>
+          <span class="text-[11px] text-amber-300/90 font-medium">3mm Toughened Glass</span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
+          <button onclick="setPanelFinish('black')" id="fin-btn-black"
+            class="flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2 rounded-xl text-[11px] sm:text-xs font-semibold bg-white/15 border border-amber-400/60 text-white transition">
+            <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#0d0f14] border border-white/40 shrink-0"></span>
+            <span>Black</span>
+          </button>
+          <button onclick="setPanelFinish('grey')" id="fin-btn-grey"
+            class="flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2 rounded-xl text-[11px] sm:text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition">
+            <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#636872] border border-white/40 shrink-0"></span>
+            <span>Grey</span>
+          </button>
+          <button onclick="setPanelFinish('white')" id="fin-btn-white"
+            class="flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2 rounded-xl text-[11px] sm:text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition">
+            <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#f1f5f9] border border-gray-400 shrink-0"></span>
+            <span>White</span>
+          </button>
+        </div>
+
+        <div class="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
+          <label for="brochureModel" class="text-xs text-gray-400 shrink-0">Configuration:</label>
+          <select id="brochureModel" onchange="setBrochureModel(this.value)"
+            class="w-full bg-[#12151e] text-gray-100 text-xs rounded-xl px-3 py-2 border border-white/15 focus:outline-none focus:border-amber-400">
+            <option value="no01">No. 01 (2M — 2 Switch)</option>
+            <option value="no03" selected>No. 03 (4M — 4 Switch + 1 Fan)</option>
+            <option value="no09">No. 09 (6M — 10 Switch)</option>
+            <option value="no14">No. 14 (12M — 20 Switch + 2 Socket)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Wall-Mounted Magnetic+ Glass Touch Panel (Below Specification Controls) -->
+      <div id="panelWallStage" class="wall-walnut relative rounded-3xl p-3.5 sm:p-7 flex flex-col items-center justify-center min-h-[245px] sm:min-h-[300px] border border-white/15 shadow-2xl transition-all duration-500">
         
         <div id="magneticPlate" class="magnetic-plate plate-black w-full max-w-[490px] px-3.5 py-4 sm:px-6 sm:py-6">
           <div id="touchPlateContent" class="relative z-10"></div>
@@ -623,8 +660,21 @@
         </div>
       </div>
 
-      <!-- Mobile Smart Mood Scenes (Visible on Mobile/Tablet directly below the Touch Panel) -->
-      <div class="order-2 lg:hidden glass-card rounded-3xl p-4 border border-white/15 shadow-xl flex flex-col gap-3">
+      <!-- Compact Brochure Spec Strip -->
+      <div class="glass-card rounded-2xl px-4 py-3.5 text-center flex flex-col gap-2">
+        <p class="text-[11px] font-medium tracking-wide text-gray-300">
+          3mm Toughened Glass <span class="text-amber-400 mx-1">•</span>
+      
+          25A Heavy Duty Relay <span class="text-amber-400 mx-1">•</span>
+          Voice &amp; OTA Ready
+        </p>
+        <p class="text-xs sm:text-sm text-amber-300 font-medium leading-relaxed pt-2 border-t border-white/10">
+          <span class="font-bold text-amber-300">Note:</span> For motorized control can be modified according to brand/user requirement. <span class="text-gray-200">(e.g. Curtain Motors, Gate Motors)</span>
+        </p>
+      </div>
+
+      <!-- Mobile Smart Mood Scenes (Below Brochure Spec Strip on Mobile/Tablet) -->
+      <div class="lg:hidden glass-card rounded-3xl p-4 border border-white/15 shadow-xl flex flex-col gap-3">
         <div class="flex items-center justify-between gap-2">
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24]"></span>
@@ -675,56 +725,6 @@
             </div>
           </button>
         </div>
-      </div>
-
-      <!-- Finish Switcher & Brochure Model Selector -->
-      <div id="tour-step-finish" class="order-3 lg:order-1 glass-card rounded-2xl p-3.5 sm:p-4 flex flex-col gap-3">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold uppercase tracking-wider text-gray-300">Panel Glass Finish</span>
-          <span class="text-[11px] text-amber-300/90 font-medium">3mm Toughened Glass</span>
-        </div>
-
-        <div class="grid grid-cols-3 gap-1.5 sm:gap-2">
-          <button onclick="setPanelFinish('black')" id="fin-btn-black"
-            class="flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2 rounded-xl text-[11px] sm:text-xs font-semibold bg-white/15 border border-amber-400/60 text-white transition">
-            <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#0d0f14] border border-white/40 shrink-0"></span>
-            <span>Black</span>
-          </button>
-          <button onclick="setPanelFinish('grey')" id="fin-btn-grey"
-            class="flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2 rounded-xl text-[11px] sm:text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition">
-            <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#636872] border border-white/40 shrink-0"></span>
-            <span>Grey</span>
-          </button>
-          <button onclick="setPanelFinish('white')" id="fin-btn-white"
-            class="flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2 rounded-xl text-[11px] sm:text-xs font-medium bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition">
-            <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#f1f5f9] border border-gray-400 shrink-0"></span>
-            <span>White</span>
-          </button>
-        </div>
-
-        <div class="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
-          <label for="brochureModel" class="text-xs text-gray-400 shrink-0">Configuration:</label>
-          <select id="brochureModel" onchange="setBrochureModel(this.value)"
-            class="w-full bg-[#12151e] text-gray-100 text-xs rounded-xl px-3 py-2 border border-white/15 focus:outline-none focus:border-amber-400">
-            <option value="no01">No. 01 (2M — 2 Switch)</option>
-            <option value="no03" selected>No. 03 (4M — 4 Switch + 1 Fan)</option>
-            <option value="no09">No. 09 (6M — 10 Switch)</option>
-            <option value="no14">No. 14 (12M — 20 Switch + 2 Socket)</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Compact Brochure Spec Strip -->
-      <div class="order-4 lg:order-3 glass-card rounded-2xl px-4 py-3.5 text-center flex flex-col gap-2">
-        <p class="text-[11px] font-medium tracking-wide text-gray-300">
-          3mm Toughened Glass <span class="text-amber-400 mx-1">•</span>
-      
-          25A Heavy Duty Relay <span class="text-amber-400 mx-1">•</span>
-          Voice &amp; OTA Ready
-        </p>
-        <p class="text-xs sm:text-sm text-amber-300 font-medium leading-relaxed pt-2 border-t border-white/10">
-          <span class="font-bold text-amber-300">Note:</span> For motorized control can be modified according to brand/user requirement. <span class="text-gray-200">(e.g. Curtain Motors, Gate Motors)</span>
-        </p>
       </div>
     </aside>
   </main>
